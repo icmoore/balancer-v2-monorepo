@@ -131,7 +131,7 @@ export function allInOne(numberOfTokens: number, poolType: WeightedPoolType): vo
 
   describe('allInOneGo', () => {
 
-    context('creation', () => {
+    context('Create pool', () => {
 
       it('deploy pool setup sequence', async () => {
         await deployVault();
