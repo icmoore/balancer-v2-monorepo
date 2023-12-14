@@ -98,7 +98,7 @@ export function allInOne(numberOfTokens: number, poolType: WeightedPoolType): vo
     const previousBptBalance = await pool.balanceOf(recipient);
     const bptOut = previousBptBalance.div(2);
     const expectedAmountsIn = initialBalances.map((balance) => balance.div(2));
-    const result = await pool.joinAllGivenOut({ recipient, bptOut, from: lp });    
+    const result = await pool.joinAllGivenOut({ recipient, bptOut, from: lp });  
   }  
 
   // remove liquidity via withdrawing 'token amount' for a single asset 
@@ -107,7 +107,12 @@ export function allInOne(numberOfTokens: number, poolType: WeightedPoolType): vo
     const previousBptBalance = await pool.balanceOf(lp);
     const bptIn = pct(previousBptBalance, 0.2);
     const expectedTokenOut = await pool.estimateTokenOut(token, bptIn);
-    const result = await pool.singleExitGivenIn({ from: lp, bptIn, token });    
+    const result = await pool.singleExitGivenIn({ from: lp, bptIn, token }); 
+
+    console.log('singleExitGivenIn: '+ bptIn); 
+    console.log('singleExitGivenIn: '+ expectedTokenOut); 
+    console.log('singleExitGivenIn: '+ result.amountsOut);
+
   }  
 
   // remove liquidity via withdrawing 'token amount' for multiple assets 
@@ -125,6 +130,10 @@ export function allInOne(numberOfTokens: number, poolType: WeightedPoolType): vo
     const expectedBptIn = previousBptBalance.div(2);
     const maximumBptIn = pct(expectedBptIn, 1.01);
     const result = await pool.exitGivenOut({ from: lp, amountsOut, maximumBptIn });
+
+    console.log('exitGivenOut: '+ maximumBptIn); 
+    console.log('exitGivenOut: '+ amountsOut); 
+    console.log('exitGivenOut: '+ result.amountsOut);
   } 
 
   // swap output token given input token
@@ -145,12 +154,14 @@ export function allInOne(numberOfTokens: number, poolType: WeightedPoolType): vo
   async function poolInfo(context: string): Promise<void> {
     const poolTokens = await pool.getTokens();
     const previousBptBalance = await pool.balanceOf(recipient);
+    
 
     let message: string = "\n        Weighted pool info: " + context + "+\n";
     message = message + '        ------------------------\n'
     message = message + '        name: '+await pool.name()+'\n'
     message = message + '        symbol: '+await pool.symbol()+'\n'
     message = message + '        vault address: '+await pool.vault.address+'\n'
+    message = message + '        tokens: '+ await poolTokens.tokens +'\n'
     message = message + '        balances: '+ await poolTokens.balances +'\n'
     message = message + '        decimal: '+ await pool.decimals() +'\n'
     message = message + '        supply: '+ await pool.totalSupply() +'\n'
@@ -239,7 +250,8 @@ export function allInOne(numberOfTokens: number, poolType: WeightedPoolType): vo
         await deployTokens();
         await defineTokens(numberOfTokens);      
         await deployPool();
-        await initPool();     
+        await initPool();    
+        await poolInfo('exit given out'); 
         await exitGivenOut();
         await poolInfo('exit given out');
       });       
