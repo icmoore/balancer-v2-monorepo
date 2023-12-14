@@ -237,6 +237,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ManagedPoolSettings__factory>;
     getContractFactory(
+      name: "SimpleBalancerInteraction",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.SimpleBalancerInteraction__factory>;
+    getContractFactory(
       name: "MockCircuitBreakerLib",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.MockCircuitBreakerLib__factory>;
@@ -569,6 +573,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.ManagedPoolSettings>;
+    getContractAt(
+      name: "SimpleBalancerInteraction",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.SimpleBalancerInteraction>;
     getContractAt(
       name: "MockCircuitBreakerLib",
       address: string,

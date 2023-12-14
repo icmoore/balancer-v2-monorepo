@@ -430,10 +430,11 @@ __metadata:
     "@balancer-labs/v2-interfaces": "workspace:*"
     "@balancer-labs/v2-pool-utils": "workspace:*"
     "@balancer-labs/v2-solidity-utils": "workspace:*"
+    "@ethersproject/abi": "npm:^5.6.3"
+    "@ethersproject/providers": "npm:^5.6.8"
     "@nomiclabs/hardhat-ethers": "npm:^2.2.1"
     "@nomiclabs/hardhat-waffle": "npm:^2.0.3"
     "@typechain/ethers-v5": "npm:^10.0.0"
-    "@typechain/ethers-v6": "npm:0.5.1"
     "@typechain/hardhat": "npm:^6.0.0"
     "@types/chai": "npm:^4.3.3"
     "@types/lodash": "npm:^4.14.186"
@@ -829,7 +830,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ethersproject/abi@npm:5.7.0, @ethersproject/abi@npm:^5.1.2, @ethersproject/abi@npm:^5.5.0, @ethersproject/abi@npm:^5.7.0":
+"@ethersproject/abi@npm:5.7.0, @ethersproject/abi@npm:^5.1.2, @ethersproject/abi@npm:^5.5.0, @ethersproject/abi@npm:^5.6.3, @ethersproject/abi@npm:^5.7.0":
   version: 5.7.0
   resolution: "@ethersproject/abi@npm:5.7.0"
   dependencies:
@@ -1056,7 +1057,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ethersproject/providers@npm:5.7.2, @ethersproject/providers@npm:^5.7.1, @ethersproject/providers@npm:^5.7.2":
+"@ethersproject/providers@npm:5.7.2, @ethersproject/providers@npm:^5.6.8, @ethersproject/providers@npm:^5.7.1, @ethersproject/providers@npm:^5.7.2":
   version: 5.7.2
   resolution: "@ethersproject/providers@npm:5.7.2"
   dependencies:
@@ -2012,20 +2013,6 @@ __metadata:
     ethers: ^5.0.0
     typechain: ^3.0.0
   checksum: 306a66df0353a1f8439d1bdb98cf78e979b32f4cc5691948b0eb895669121e59c87030eb0999bceb402c4edf0ea597f7897eb9448778df402e4278ad00a98de9
-  languageName: node
-  linkType: hard
-
-"@typechain/ethers-v6@npm:0.5.1":
-  version: 0.5.1
-  resolution: "@typechain/ethers-v6@npm:0.5.1"
-  dependencies:
-    lodash: "npm:^4.17.15"
-    ts-essentials: "npm:^7.0.1"
-  peerDependencies:
-    ethers: 6.x
-    typechain: ^8.3.2
-    typescript: ">=4.7.0"
-  checksum: 3f9bb0c2ced34c595c5634e27f7caade7a896eb6c8ab8e7c49ec9873726eba7d9bcb8750d9633c245dc9ef68c4e9fbeea7642a9e12d316978de28d78684ee708
   languageName: node
   linkType: hard
 

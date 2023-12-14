@@ -118,6 +118,8 @@ export type {ManagedPoolFactory} from "./contracts/managed/ManagedPoolFactory";
 export {ManagedPoolFactory__factory} from "./factories/contracts/managed/ManagedPoolFactory__factory";
 export type {ManagedPoolSettings} from "./contracts/managed/ManagedPoolSettings";
 export {ManagedPoolSettings__factory} from "./factories/contracts/managed/ManagedPoolSettings__factory";
+export type {SimpleBalancerInteraction} from "./contracts/SimpleBalancerInteraction";
+export {SimpleBalancerInteraction__factory} from "./factories/contracts/SimpleBalancerInteraction__factory";
 export type {MockCircuitBreakerLib} from "./contracts/test/MockCircuitBreakerLib";
 export {MockCircuitBreakerLib__factory} from "./factories/contracts/test/MockCircuitBreakerLib__factory";
 export type {MockGradualValueChange} from "./contracts/test/MockGradualValueChange";
