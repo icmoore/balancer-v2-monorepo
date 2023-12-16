@@ -35,15 +35,17 @@ export function allInOne(numberOfTokens: number, poolType: WeightedPoolType): vo
     vault = await Vault.create();
   }    
 
-  async function defineTokens(numberOfTokens: number): Promise<void> {
-    tokens = allTokens.subset(numberOfTokens);
-  }  
+
   
   async function deployTokens(): Promise<void> {
     const tokenAmounts = fp(100);
     allTokens = await TokenList.create(['MKR', 'DAI', 'SNX', 'BAT', 'GRT'], { sorted: true });
     await allTokens.mint({ to: lp, amount: tokenAmounts });
     await allTokens.approve({ to: vault.address, from: lp, amount: tokenAmounts }); 
+  }  
+
+  async function defineTokens(numberOfTokens: number): Promise<void> {
+    tokens = allTokens.subset(numberOfTokens);
   }  
 
   async function deployPool(params: RawWeightedPoolDeployment = {}): Promise<void> {

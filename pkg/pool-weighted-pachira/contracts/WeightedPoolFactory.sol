@@ -16,12 +16,10 @@ pragma solidity ^0.7.0;
 pragma experimental ABIEncoderV2;
 
 import "@balancer-labs/v2-interfaces/contracts/vault/IVault.sol";
-
 import "@balancer-labs/v2-pool-utils/contracts/factories/BasePoolFactory.sol";
 
-import "./WeightedPool.sol";
-
 contract WeightedPoolFactory is BasePoolFactory {
+    string private test_message;
     constructor(
         IVault vault,
         IProtocolFeePercentagesProvider protocolFeeProvider,
@@ -37,6 +35,7 @@ contract WeightedPoolFactory is BasePoolFactory {
         )
     {
         // solhint-disable-previous-line no-empty-blocks
+        test_message = "Test message ...";
     }
 
     /**
@@ -74,5 +73,12 @@ contract WeightedPoolFactory is BasePoolFactory {
                 ),
                 salt
             );
+    }
+
+    function init() {
+    }     
+
+    function getTestMessage() external view returns (string memory) {
+        return test_message;
     }
 }

@@ -14,7 +14,6 @@ import { fp } from '@balancer-labs/v2-helpers/src/numbers';
 import { deploy, deployedAt} from '@balancer-labs/v2-helpers/src/contract';
 import { randomBytes } from 'ethers/lib/utils';
 
-
 let vault: Vault;
 let tokens: TokenList;
 let allTokens: TokenList;
@@ -73,24 +72,24 @@ async function main() {
     BASE_BUFFER_PERIOD_DURATION
     );
 
-    tokens = await TokenList.create(['MKR', 'DAI', 'SNX', 'BAT'], { sorted: true });
-    rateProviders = await tokens.asyncMap(async () => (await deploy('v2-pool-utils/MockRateProvider')).address);  
+  tokens = await TokenList.create(['MKR', 'DAI', 'SNX', 'BAT'], { sorted: true });
+  rateProviders = await tokens.asyncMap(async () => (await deploy('v2-pool-utils/MockRateProvider')).address);  
 
-    const receipt = await (
-      await factory.create(
-        NAME,
-        SYMBOL,
-        tokens.addresses,
-        WEIGHTS,
-        rateProviders,
-        POOL_SWAP_FEE_PERCENTAGE,
-        owner.address,
-        randomBytes(32)
-      )
-    ).wait();
+  const receipt = await (
+    await factory.create(
+      NAME,
+      SYMBOL,
+      tokens.addresses,
+      WEIGHTS,
+      rateProviders,
+      POOL_SWAP_FEE_PERCENTAGE,
+      owner.address,
+      randomBytes(32)
+    )
+  ).wait();
 
   const event = expectEvent.inReceipt(receipt, 'PoolCreated');    
-  pool = await deployedAt('WeightedPool', event.args.pool)
+  pool = await deployedAt('WeightedPool', event.args.pool);
   console.log('WeightedPool: ' + await event.args.pool);         
   console.log('     - name: ' + await pool.name());  
   console.log('     - symbol: ' + await pool.symbol());  
