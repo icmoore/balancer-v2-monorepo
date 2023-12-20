@@ -9,7 +9,7 @@ import Vault from '@balancer-labs/v2-helpers/src/models/vault/Vault';
 import { toNormalizedWeights } from '@balancer-labs/balancer-js';
 import TokenList from '@balancer-labs/v2-helpers/src/models/tokens/TokenList';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
-import { BigNumberish, fp, pct, bn} from '@balancer-labs/v2-helpers/src/numbers';
+import { BigNumberish, fp, fpMul, pct, bn} from '@balancer-labs/v2-helpers/src/numbers';
 import WeightedPool from '@balancer-labs/v2-helpers/src/models/pools/weighted/WeightedPool';
 import BaseWeightedPool from '@balancer-labs/v2-helpers/src/models/pools/weighted/BaseWeightedPool';
 
@@ -108,6 +108,74 @@ async function deployWeightedPoolContract(): Promise<void>  {
       const minimumBptOut = pct(expectedBptOut, 0.99);
       const result = await pachiraPool.joinGivenIn({ amountsIn, minimumBptOut, recipient, from: lp });  
   }  
+
+  // add liquidity via depositing 'shares amount' for single asset deposit
+  async function joinGivenOut(): Promise<void> {
+    const token = 0;
+    const bptOut = fp(2);
+    const previousBptBalance = await pachiraPool.balanceOf(recipient);
+    const expectedAmountIn = await pachiraPool.estimateTokenIn(token, bptOut, initialBalances);
+    const result = await pachiraPool.joinGivenOut({ recipient, bptOut, token, from: lp });
+  }  
+
+  // add liquidity via depositing 'shares amount' for all asset deposit
+  async function joinAllGivenOut(): Promise<void> {
+    const previousBptBalance = await pachiraPool.balanceOf(recipient);
+    const bptOut = previousBptBalance.div(2);
+    const expectedAmountsIn = initialBalances.map((balance) => balance.div(2));
+    const result = await pachiraPool.joinAllGivenOut({ recipient, bptOut, from: lp });  
+  }  
+
+  // remove liquidity via withdrawing 'token amount' for a single asset 
+  async function singleExitGivenIn(): Promise<void> {
+    const token = 0;
+    const previousBptBalance = await pachiraPool.balanceOf(lp);
+    const bptIn = pct(previousBptBalance, 0.2);
+    const expectedTokenOut = await pachiraPool.estimateTokenOut(token, bptIn);
+    const result = await pachiraPool.singleExitGivenIn({ from: lp, bptIn, token }); 
+
+    console.log('singleExitGivenIn: '+ bptIn); 
+    console.log('singleExitGivenIn: '+ expectedTokenOut); 
+    console.log('singleExitGivenIn: '+ result.amountsOut);
+
+  }  
+
+  // remove liquidity via withdrawing 'token amount' for multiple assets 
+  async function multiExitGivenIn(): Promise<void> {
+    const previousBptBalance = await pachiraPool.balanceOf(lp);
+    const totalBPT = await pachiraPool.totalSupply();
+    const expectedAmountsOut = initialBalances.map((balance) => balance.mul(previousBptBalance).div(totalBPT));
+    const result = await pachiraPool.multiExitGivenIn({ from: lp, bptIn: previousBptBalance });
+  }  
+
+  // remove liquidity via withdrawing 'shares amount' for a single asset 
+  async function exitGivenOut(): Promise<void> {
+    const previousBptBalance = await pachiraPool.balanceOf(lp);
+    const amountsOut = initialBalances.map((balance) => balance.div(2));
+    const expectedBptIn = previousBptBalance.div(2);
+    const maximumBptIn = pct(expectedBptIn, 1.01);
+    const result = await pachiraPool.exitGivenOut({ from: lp, amountsOut, maximumBptIn });
+
+    console.log('exitGivenOut: '+ maximumBptIn); 
+    console.log('exitGivenOut: '+ amountsOut); 
+    console.log('exitGivenOut: '+ result.amountsOut);
+  } 
+
+  // swap output token given input token
+  async function swapGivenIn(): Promise<void> {
+    const amount = fp(0.1);
+    const amountWithFees = fpMul(amount, POOL_SWAP_FEE_PERCENTAGE.add(fp(1)));
+    const expectedAmountOut = await pachiraPool.estimateGivenIn({ in: 1, out: 0, amount: amountWithFees });
+    const result = await pachiraPool.swapGivenIn({ in: 1, out: 0, amount: amountWithFees, from: lp, recipient });
+  }  
+
+  // swap input token given output token 
+  async function swapGivenOut(): Promise<void> {
+    const amount = fp(0.1);
+    const expectedAmountIn = await pachiraPool.estimateGivenOut({ in: 1, out: 0, amount });
+    const result = await pachiraPool.swapGivenOut({ in: 1, out: 0, amount, from: lp, recipient }); 
+  } 
+
   
   async function poolInfo(context: string): Promise<void> {
     const poolTokens = await pachiraPool.getTokens();
@@ -142,15 +210,60 @@ describe("PachiraWeightedPool", () => {
 
         await deployWeightedPoolContract();
         await initContractPool()
-
         //await deployPool({ fromFactory: true });
 
         await initJoin();
-        await joinGivenIn();
         await poolInfo('test') 
         expect(true);
+      });   
+      
+      it('join given in', async () => {
+        expect(true);
+        await joinGivenIn()
+        await poolInfo('join given in');
       });        
+       
+      it('join given out', async () => {
+        expect(true);
+        await joinGivenOut()
+        await poolInfo('join given out');
+      });     
+
+      it('join all given out', async () => {
+        expect(true);
+        await joinAllGivenOut()
+        await poolInfo('join all given out');
+      });     
+      
+      it('single exit given in', async () => {
+        expect(true);
+        await singleExitGivenIn();
+        await poolInfo('single exit given in');
+      });   
+      
+      it('mulit-exit given in', async () => {
+        expect(true);
+        await multiExitGivenIn();
+        await poolInfo('mulit-exit given in');
+      });   
+      
+      it('swap given in', async () => {
+        expect(true);
+        await deployVault();
+        await deployTokens();
+        await deployWeightedPoolContract();
+        await initContractPool()
+        await initJoin();
+        await joinGivenIn();
+        await swapGivenIn();
+      });           
  
+      it('swap given out', async () => {
+        expect(true); 
+        await swapGivenOut();
+        await poolInfo('swap given out');
+      }); 
+
       it('simple test function', async () => {
           const result = await pachiraFactory.getTestMessage() 
           console.log('         '+result)
