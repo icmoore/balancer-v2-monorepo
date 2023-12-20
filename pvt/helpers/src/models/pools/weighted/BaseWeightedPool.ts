@@ -298,7 +298,7 @@ export default class BaseWeightedPool extends BasePool {
     console.log('protocolFeePercentage: '+params.protocolFeePercentage?.valueOf)
     console.log('from: '+params.from?.address)
     */
-
+   
     const tx = await this.vault.joinPool({
       poolAddress: this.address,
       poolId: this.poolId,

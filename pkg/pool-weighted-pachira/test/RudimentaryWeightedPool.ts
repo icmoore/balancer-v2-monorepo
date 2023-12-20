@@ -5,6 +5,7 @@ import { PachiraWeightedPool } from '../typechain';
 import { PachiraWeightedPool__factory } from '../typechain/factories/contracts/PachiraWeightedPool__factory';          
 import { toNormalizedWeights } from '@balancer-labs/balancer-js';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { defaultAbiCoder } from '@ethersproject/abi';
 
 import { BigNumberish, fp, fpMul, pct, bn} from '@balancer-labs/v2-helpers/src/numbers';
 import { RawWeightedPoolDeployment} from '@balancer-labs/v2-helpers/src/models/pools/weighted/types';
@@ -22,7 +23,6 @@ const weights: BigNumberish[] = WEIGHTS.slice(0, 4);
 const initialBalances = INITIAL_BALANCES.slice(0, 4);
 const ZEROS = Array(4).fill(bn(0));
 
-
 const BASE_PAUSE_WINDOW_DURATION = MONTH * 3;
 const BASE_BUFFER_PERIOD_DURATION = MONTH;
 
@@ -32,6 +32,7 @@ let allTokens: TokenList;
 let lp: SignerWithAddress;
 let deployer: SignerWithAddress;
 let recipient: SignerWithAddress;
+let other: SignerWithAddress;
 let pachiraFactory: PachiraWeightedPool;
 let pachiraPool: BaseWeightedPool;
 
@@ -88,6 +89,27 @@ async function initContractPool(): Promise<void> {
 async function initJoin(): Promise<void> {
   const { amountsIn, dueProtocolFeeAmounts } = await pachiraPool.init({ recipient, initialBalances, from: lp });
 }  
+
+async function initRawJoin(): Promise<void> {
+  const joinKind = 0;
+  const abi = ['uint256', 'uint256[]'];
+  const data = [joinKind, initialBalances];
+  const userData = defaultAbiCoder.encode(abi,data); 
+  const poolId = await pachiraFactory.getPoolId();
+  const poolTokens = await vault.getPoolTokens(poolId)
+
+    const tx = await vault.joinPool({
+                              poolId: poolId,
+                              tokens: tokens.addresses,
+                              poolAddress: pachiraFactory.address,
+                              recipient: recipient.address,
+                              currentBalances: initialBalances,
+                              lastChangeBlock: 0,
+                              protocolFeePercentage: 0,
+                              data: userData,
+                              from: lp
+                            }); 
+}
     
 async function joinGivenIn(): Promise<void> {
       let expectedBptOut: BigNumberish;
@@ -185,12 +207,34 @@ async function poolInfo(context: string): Promise<void> {
 }    
 
 before('setup signers', async () => {
-    [,lp, recipient, deployer] = await ethers.getSigners();
+    [,lp, recipient, deployer, other] = await ethers.getSigners();
 });  
 
 describe("PachiraWeightedPool", () => {
 
     context('Engage contract', () => {
+
+      /*
+      it('test', async () => {
+
+        await deployVault();
+        await deployTokens();
+
+        await deployWeightedPoolContract();
+        await initContractPool()
+
+        const joinKind = 0;
+        const abi = ['uint256', 'uint256[]'];
+        const data = [joinKind, initialBalances];
+        const userData = defaultAbiCoder.encode(abi,data); 
+        const poolId = await pachiraFactory.getPoolId();
+        const poolTokens = await vault.getPoolTokens(poolId)
+
+        await pachiraPool.instance.connect(lp).onJoinPool(poolId, 
+          pachiraFactory.address, 
+          recipient.address, initialBalances, 0, 0, userData);
+      });  
+      */
 
       it('deploy vault and tokens', async () => {
         await deployVault();
@@ -198,15 +242,15 @@ describe("PachiraWeightedPool", () => {
 
         await deployWeightedPoolContract();
         await initContractPool()
-        //await deployPool({ fromFactory: true });
 
-        await initJoin();
+        //await initJoin();
+        await initRawJoin()
         await poolInfo('test') 
         expect(true);
       });   
       
       it('join given in', async () => {
-        expect(true);
+        expect(true);                                       
         await joinGivenIn()
         await poolInfo('join given in');
       });        
@@ -244,6 +288,10 @@ describe("PachiraWeightedPool", () => {
         await initJoin();
         await joinGivenIn();
         await swapGivenIn();
+
+        //console.log('contract.address: '+pachiraFactory.address)
+        //console.log('recipient.address: '+recipient.address)
+        //console.log('lp.address: '+lp.address)
       });           
  
       it('swap given out', async () => {
@@ -259,8 +307,7 @@ describe("PachiraWeightedPool", () => {
       }); 
 
    
-      }); 
-
+    }); 
 });      
 
 
