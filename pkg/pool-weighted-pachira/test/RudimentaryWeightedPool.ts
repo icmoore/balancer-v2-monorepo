@@ -143,11 +143,6 @@ async function singleExitGivenIn(): Promise<void> {
     const bptIn = pct(previousBptBalance, 0.2);
     const expectedTokenOut = await pachiraPool.estimateTokenOut(token, bptIn);
     const result = await pachiraPool.singleExitGivenIn({ from: lp, bptIn, token }); 
-
-    console.log('singleExitGivenIn: '+ bptIn); 
-    console.log('singleExitGivenIn: '+ expectedTokenOut); 
-    console.log('singleExitGivenIn: '+ result.amountsOut);
-
 }  
 
   // remove liquidity via withdrawing 'token amount' for multiple assets 
@@ -165,10 +160,6 @@ async function exitGivenOut(): Promise<void> {
     const expectedBptIn = previousBptBalance.div(2);
     const maximumBptIn = pct(expectedBptIn, 1.01);
     const result = await pachiraPool.exitGivenOut({ from: lp, amountsOut, maximumBptIn });
-
-    console.log('exitGivenOut: '+ maximumBptIn); 
-    console.log('exitGivenOut: '+ amountsOut); 
-    console.log('exitGivenOut: '+ result.amountsOut);
 } 
 
 // swap output token given input token
