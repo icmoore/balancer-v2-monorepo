@@ -2,7 +2,9 @@
 import { ethers } from 'hardhat';
 import { Contract } from 'ethers';
 import { expect } from 'chai';
-import { WeightedPoolFactory } from '../typechain';
+import { PachiraWeightedPool, 
+  WeightedPoolFactory } from '../typechain';
+  import { WeightedPoolFactory__factory } from '../typechain/factories/contracts/WeightedPoolFactory__factory';          
 import { MONTH } from '@balancer-labs/v2-helpers/src/time';
 import Vault from '@balancer-labs/v2-helpers/src/models/vault/Vault';
 import { toNormalizedWeights } from '@balancer-labs/balancer-js';
@@ -17,10 +19,12 @@ let vault: Vault;
 let tokens: TokenList;
 let allTokens: TokenList;
 let lp: SignerWithAddress;
+let deployer: SignerWithAddress;
 let factory: Contract;
 let pool: Contract;
 let rateProviders: string[];
 let owner: SignerWithAddress;
+let weightedPoolFactory: WeightedPoolFactory;
 
 const NAME = 'Balancer Pool Token';
 const SYMBOL = 'BPT';
@@ -48,42 +52,31 @@ async function initPool(): Promise<void> {
 async function deployFactoryContract(): Promise<void>  {
   // Interacting with WeightedPoolFactory.sol
   console.log('     Deploying WeightedPoolFactory ...');  
-  const WeightedPoolFactory = await ethers.getContractFactory('WeightedPoolFactory');
-  factory = await WeightedPoolFactory.deploy(vault.address, 
-                                                vault.getFeesProvider().address,
-                                                BASE_PAUSE_WINDOW_DURATION, 
-                                                BASE_BUFFER_PERIOD_DURATION
-                                            );    
+    weightedPoolFactory = await new WeightedPoolFactory__factory(deployer).deploy(vault.address, 
+    vault.getFeesProvider().address,
+    BASE_PAUSE_WINDOW_DURATION, 
+    BASE_BUFFER_PERIOD_DURATION);                                             
 }    
 
 async function createPool(): Promise<void>  {                       
   rateProviders = await tokens.asyncMap(async () => (await deploy('v2-pool-utils/MockRateProvider')).address);  
-  const receipt = await (
-    await factory.create(
-      NAME,
-      SYMBOL,
-      tokens.addresses,
-      WEIGHTS,
-      rateProviders,
-      POOL_SWAP_FEE_PERCENTAGE,
-      owner.address,
-      randomBytes(32)
-    )
-  ).wait();
-
-  const pool_create_event = expectEvent.inReceipt(receipt, 'PoolCreated');    
-  pool = await deployedAt('WeightedPool', pool_create_event.args.pool);
-  console.log('     WeightedPool: ' + await pool_create_event.args.pool);         
-  console.log('         - name: ' + await pool.name());  
-  console.log('         - symbol: ' + await pool.symbol());  
-  console.log('         - swap fees: ' + await pool.getSwapFeePercentage());   
-  console.log('         - owner: ' + await pool.getOwner());  
-  console.log('         - decimals: ' + await pool.decimals());  
-                             
+  const tx =     await weightedPoolFactory.create(
+    NAME,
+    SYMBOL,
+    tokens.addresses,
+    WEIGHTS,
+    rateProviders,
+    POOL_SWAP_FEE_PERCENTAGE,
+    owner.address,
+    randomBytes(32)
+  )
+  
+  const receipt = await tx.wait();
+  console.log(receipt);                              
 }
 
 before('setup signers', async () => {
-    [, owner] = await ethers.getSigners();
+    [, owner, deployer] = await ethers.getSigners();
 });  
 
 beforeEach('deploy vault', () => {
@@ -116,7 +109,7 @@ describe("SimpleRefactor", () => {
         }); 
 
         it('simple test function', async () => {
-            const result = await factory.getTestMessage() 
+            const result = await weightedPoolFactory.getTesterMessage()
             console.log('         '+result)
             expect(true);
         });    

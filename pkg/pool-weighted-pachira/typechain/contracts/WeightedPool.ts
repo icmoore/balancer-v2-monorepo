@@ -120,6 +120,7 @@ export interface WeightedPoolInterface extends utils.Interface {
     "getVault()": FunctionFragment;
     "inRecoveryMode()": FunctionFragment;
     "increaseAllowance(address,uint256)": FunctionFragment;
+    "init(bytes32,address,address,uint256[],bytes)": FunctionFragment;
     "name()": FunctionFragment;
     "nonces(address)": FunctionFragment;
     "onExitPool(bytes32,address,address,uint256[],uint256,uint256,bytes)": FunctionFragment;
@@ -198,6 +199,8 @@ export interface WeightedPoolInterface extends utils.Interface {
       | "inRecoveryMode()"
       | "increaseAllowance"
       | "increaseAllowance(address,uint256)"
+      | "init"
+      | "init(bytes32,address,address,uint256[],bytes)"
       | "name"
       | "name()"
       | "nonces"
@@ -451,6 +454,26 @@ export interface WeightedPoolInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "increaseAllowance(address,uint256)",
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "init",
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<BytesLike>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "init(bytes32,address,address,uint256[],bytes)",
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<BytesLike>
+    ]
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(functionFragment: "name()", values?: undefined): string;
@@ -853,6 +876,11 @@ export interface WeightedPoolInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "increaseAllowance(address,uint256)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "init", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "init(bytes32,address,address,uint256[],bytes)",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
@@ -1289,6 +1317,24 @@ export interface WeightedPool extends BaseContract {
       overrides?: Overrides & {from?: PromiseOrValue<string>}
     ): Promise<ContractTransaction>;
 
+    init(
+      poolId: PromiseOrValue<BytesLike>,
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      scalingFactors: PromiseOrValue<BigNumberish>[],
+      userData: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & {from?: PromiseOrValue<string>}
+    ): Promise<ContractTransaction>;
+
+    "init(bytes32,address,address,uint256[],bytes)"(
+      poolId: PromiseOrValue<BytesLike>,
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      scalingFactors: PromiseOrValue<BigNumberish>[],
+      userData: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & {from?: PromiseOrValue<string>}
+    ): Promise<ContractTransaction>;
+
     name(overrides?: CallOverrides): Promise<[string]>;
 
     "name()"(overrides?: CallOverrides): Promise<[string]>;
@@ -1700,6 +1746,24 @@ export interface WeightedPool extends BaseContract {
     overrides?: Overrides & {from?: PromiseOrValue<string>}
   ): Promise<ContractTransaction>;
 
+  init(
+    poolId: PromiseOrValue<BytesLike>,
+    sender: PromiseOrValue<string>,
+    recipient: PromiseOrValue<string>,
+    scalingFactors: PromiseOrValue<BigNumberish>[],
+    userData: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & {from?: PromiseOrValue<string>}
+  ): Promise<ContractTransaction>;
+
+  "init(bytes32,address,address,uint256[],bytes)"(
+    poolId: PromiseOrValue<BytesLike>,
+    sender: PromiseOrValue<string>,
+    recipient: PromiseOrValue<string>,
+    scalingFactors: PromiseOrValue<BigNumberish>[],
+    userData: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & {from?: PromiseOrValue<string>}
+  ): Promise<ContractTransaction>;
+
   name(overrides?: CallOverrides): Promise<string>;
 
   "name()"(overrides?: CallOverrides): Promise<string>;
@@ -2102,6 +2166,24 @@ export interface WeightedPool extends BaseContract {
       addedValue: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<boolean>;
+
+    init(
+      poolId: PromiseOrValue<BytesLike>,
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      scalingFactors: PromiseOrValue<BigNumberish>[],
+      userData: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber, BigNumber[]]>;
+
+    "init(bytes32,address,address,uint256[],bytes)"(
+      poolId: PromiseOrValue<BytesLike>,
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      scalingFactors: PromiseOrValue<BigNumberish>[],
+      userData: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber, BigNumber[]]>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
@@ -2554,6 +2636,24 @@ export interface WeightedPool extends BaseContract {
       overrides?: Overrides & {from?: PromiseOrValue<string>}
     ): Promise<BigNumber>;
 
+    init(
+      poolId: PromiseOrValue<BytesLike>,
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      scalingFactors: PromiseOrValue<BigNumberish>[],
+      userData: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & {from?: PromiseOrValue<string>}
+    ): Promise<BigNumber>;
+
+    "init(bytes32,address,address,uint256[],bytes)"(
+      poolId: PromiseOrValue<BytesLike>,
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      scalingFactors: PromiseOrValue<BigNumberish>[],
+      userData: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & {from?: PromiseOrValue<string>}
+    ): Promise<BigNumber>;
+
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
     "name()"(overrides?: CallOverrides): Promise<BigNumber>;
@@ -2979,6 +3079,24 @@ export interface WeightedPool extends BaseContract {
     "increaseAllowance(address,uint256)"(
       spender: PromiseOrValue<string>,
       addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & {from?: PromiseOrValue<string>}
+    ): Promise<PopulatedTransaction>;
+
+    init(
+      poolId: PromiseOrValue<BytesLike>,
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      scalingFactors: PromiseOrValue<BigNumberish>[],
+      userData: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & {from?: PromiseOrValue<string>}
+    ): Promise<PopulatedTransaction>;
+
+    "init(bytes32,address,address,uint256[],bytes)"(
+      poolId: PromiseOrValue<BytesLike>,
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      scalingFactors: PromiseOrValue<BigNumberish>[],
+      userData: PromiseOrValue<BytesLike>,
       overrides?: Overrides & {from?: PromiseOrValue<string>}
     ): Promise<PopulatedTransaction>;
 

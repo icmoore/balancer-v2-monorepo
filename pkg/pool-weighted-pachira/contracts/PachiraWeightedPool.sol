@@ -21,8 +21,9 @@ import "./WeightedPoolProtocolFees.sol";
 /**
  * @dev Basic Weighted Pool with immutable weights.
  */
-contract WeightedPool is BaseWeightedPool, WeightedPoolProtocolFees {
+contract PachiraWeightedPool is BaseWeightedPool, WeightedPoolProtocolFees {
     using FixedPoint for uint256;
+    string private test_message;
 
     uint256 private constant _MAX_TOKENS = 8;
 
@@ -138,7 +139,24 @@ contract WeightedPool is BaseWeightedPool, WeightedPoolProtocolFees {
         _normalizedWeight5 = numTokens > 5 ? params.normalizedWeights[5] : 0;
         _normalizedWeight6 = numTokens > 6 ? params.normalizedWeights[6] : 0;
         _normalizedWeight7 = numTokens > 7 ? params.normalizedWeights[7] : 0;
+
+        test_message = "Test message ...";
     }
+
+
+    function getTestMessage() external view returns (string memory) {
+        return test_message;
+    }  
+
+    function init(
+        bytes32 poolId,
+        address sender,
+        address recipient,
+        uint256[] memory scalingFactors,
+        bytes memory userData
+    ) external returns (uint256 property1, uint256[] memory property2) {
+        return _onInitializePool(poolId, sender, recipient, scalingFactors, userData);
+    }     
 
     function _getNormalizedWeight(IERC20 token) internal view virtual override returns (uint256) {
         // prettier-ignore
@@ -154,6 +172,7 @@ contract WeightedPool is BaseWeightedPool, WeightedPoolProtocolFees {
             _revert(Errors.INVALID_TOKEN);
         }
     }
+    
 
     function _getNormalizedWeights() internal view virtual override returns (uint256[] memory) {
         uint256 totalTokens = _getTotalTokens();
@@ -220,19 +239,9 @@ contract WeightedPool is BaseWeightedPool, WeightedPoolProtocolFees {
         return scalingFactors;
     }
 
-    function init(
-        bytes32 poolId,
-        address sender,
-        address recipient,
-        uint256[] memory scalingFactors,
-        bytes memory userData
-    ) external returns (uint256, uint256[] memory) {
-        // Initialize `_athRateProduct` if the Pool will pay protocol fees on yield.
-        // Not initializing this here properly will cause all joins/exits to revert.
-        return super._onInitializePool(poolId, sender, recipient, scalingFactors, userData);
-    }
-
     // Initialize
+  
+
     function _onInitializePool(
         bytes32 poolId,
         address sender,

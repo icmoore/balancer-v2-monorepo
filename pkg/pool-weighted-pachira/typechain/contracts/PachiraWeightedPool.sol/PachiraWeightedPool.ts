@@ -23,7 +23,7 @@ import type {
   PromiseOrValue,
 } from "../../common";
 
-export declare namespace WeightedPool {
+export declare namespace PachiraWeightedPool {
   export type NewPoolParamsStruct = {
     name: PromiseOrValue<string>;
     symbol: PromiseOrValue<string>;
@@ -89,7 +89,7 @@ export declare namespace IPoolSwapStructs {
   };
 }
 
-export interface MockWeightedPoolInterface extends utils.Interface {
+export interface PachiraWeightedPoolInterface extends utils.Interface {
   functions: {
     "DOMAIN_SEPARATOR()": FunctionFragment;
     "allowance(address,address)": FunctionFragment;
@@ -120,8 +120,6 @@ export interface MockWeightedPoolInterface extends utils.Interface {
     "getVault()": FunctionFragment;
     "inRecoveryMode()": FunctionFragment;
     "increaseAllowance(address,uint256)": FunctionFragment;
-    "init(bytes32,address,address,uint256[],bytes)": FunctionFragment;
-    "isOwnerOnlyAction(bytes32)": FunctionFragment;
     "name()": FunctionFragment;
     "nonces(address)": FunctionFragment;
     "onExitPool(bytes32,address,address,uint256[],uint256,uint256,bytes)": FunctionFragment;
@@ -200,10 +198,6 @@ export interface MockWeightedPoolInterface extends utils.Interface {
       | "inRecoveryMode()"
       | "increaseAllowance"
       | "increaseAllowance(address,uint256)"
-      | "init"
-      | "init(bytes32,address,address,uint256[],bytes)"
-      | "isOwnerOnlyAction"
-      | "isOwnerOnlyAction(bytes32)"
       | "name"
       | "name()"
       | "nonces"
@@ -457,34 +451,6 @@ export interface MockWeightedPoolInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "increaseAllowance(address,uint256)",
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "init",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>[],
-      PromiseOrValue<BytesLike>
-    ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "init(bytes32,address,address,uint256[],bytes)",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>[],
-      PromiseOrValue<BytesLike>
-    ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "isOwnerOnlyAction",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "isOwnerOnlyAction(bytes32)",
-    values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(functionFragment: "name()", values?: undefined): string;
@@ -889,19 +855,6 @@ export interface MockWeightedPoolInterface extends utils.Interface {
     functionFragment: "increaseAllowance(address,uint256)",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "init", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "init(bytes32,address,address,uint256[],bytes)",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "isOwnerOnlyAction",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "isOwnerOnlyAction(bytes32)",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "name()", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "nonces", data: BytesLike): Result;
@@ -1103,12 +1056,12 @@ export type TransferEvent = TypedEvent<
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
-export interface MockWeightedPool extends BaseContract {
+export interface PachiraWeightedPool extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: MockWeightedPoolInterface;
+  interface: PachiraWeightedPoolInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -1335,34 +1288,6 @@ export interface MockWeightedPool extends BaseContract {
       addedValue: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & {from?: PromiseOrValue<string>}
     ): Promise<ContractTransaction>;
-
-    init(
-      poolId: PromiseOrValue<BytesLike>,
-      sender: PromiseOrValue<string>,
-      recipient: PromiseOrValue<string>,
-      scalingFactors: PromiseOrValue<BigNumberish>[],
-      userData: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & {from?: PromiseOrValue<string>}
-    ): Promise<ContractTransaction>;
-
-    "init(bytes32,address,address,uint256[],bytes)"(
-      poolId: PromiseOrValue<BytesLike>,
-      sender: PromiseOrValue<string>,
-      recipient: PromiseOrValue<string>,
-      scalingFactors: PromiseOrValue<BigNumberish>[],
-      userData: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & {from?: PromiseOrValue<string>}
-    ): Promise<ContractTransaction>;
-
-    isOwnerOnlyAction(
-      actionId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
-
-    "isOwnerOnlyAction(bytes32)"(
-      actionId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
@@ -1775,34 +1700,6 @@ export interface MockWeightedPool extends BaseContract {
     overrides?: Overrides & {from?: PromiseOrValue<string>}
   ): Promise<ContractTransaction>;
 
-  init(
-    poolId: PromiseOrValue<BytesLike>,
-    sender: PromiseOrValue<string>,
-    recipient: PromiseOrValue<string>,
-    scalingFactors: PromiseOrValue<BigNumberish>[],
-    userData: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & {from?: PromiseOrValue<string>}
-  ): Promise<ContractTransaction>;
-
-  "init(bytes32,address,address,uint256[],bytes)"(
-    poolId: PromiseOrValue<BytesLike>,
-    sender: PromiseOrValue<string>,
-    recipient: PromiseOrValue<string>,
-    scalingFactors: PromiseOrValue<BigNumberish>[],
-    userData: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & {from?: PromiseOrValue<string>}
-  ): Promise<ContractTransaction>;
-
-  isOwnerOnlyAction(
-    actionId: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
-
-  "isOwnerOnlyAction(bytes32)"(
-    actionId: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
-
   name(overrides?: CallOverrides): Promise<string>;
 
   "name()"(overrides?: CallOverrides): Promise<string>;
@@ -2203,34 +2100,6 @@ export interface MockWeightedPool extends BaseContract {
     "increaseAllowance(address,uint256)"(
       spender: PromiseOrValue<string>,
       addedValue: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
-
-    init(
-      poolId: PromiseOrValue<BytesLike>,
-      sender: PromiseOrValue<string>,
-      recipient: PromiseOrValue<string>,
-      scalingFactors: PromiseOrValue<BigNumberish>[],
-      userData: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber, BigNumber[]]>;
-
-    "init(bytes32,address,address,uint256[],bytes)"(
-      poolId: PromiseOrValue<BytesLike>,
-      sender: PromiseOrValue<string>,
-      recipient: PromiseOrValue<string>,
-      scalingFactors: PromiseOrValue<BigNumberish>[],
-      userData: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber, BigNumber[]]>;
-
-    isOwnerOnlyAction(
-      actionId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
-
-    "isOwnerOnlyAction(bytes32)"(
-      actionId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
@@ -2685,34 +2554,6 @@ export interface MockWeightedPool extends BaseContract {
       overrides?: Overrides & {from?: PromiseOrValue<string>}
     ): Promise<BigNumber>;
 
-    init(
-      poolId: PromiseOrValue<BytesLike>,
-      sender: PromiseOrValue<string>,
-      recipient: PromiseOrValue<string>,
-      scalingFactors: PromiseOrValue<BigNumberish>[],
-      userData: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & {from?: PromiseOrValue<string>}
-    ): Promise<BigNumber>;
-
-    "init(bytes32,address,address,uint256[],bytes)"(
-      poolId: PromiseOrValue<BytesLike>,
-      sender: PromiseOrValue<string>,
-      recipient: PromiseOrValue<string>,
-      scalingFactors: PromiseOrValue<BigNumberish>[],
-      userData: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & {from?: PromiseOrValue<string>}
-    ): Promise<BigNumber>;
-
-    isOwnerOnlyAction(
-      actionId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    "isOwnerOnlyAction(bytes32)"(
-      actionId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
     "name()"(overrides?: CallOverrides): Promise<BigNumber>;
@@ -3139,34 +2980,6 @@ export interface MockWeightedPool extends BaseContract {
       spender: PromiseOrValue<string>,
       addedValue: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & {from?: PromiseOrValue<string>}
-    ): Promise<PopulatedTransaction>;
-
-    init(
-      poolId: PromiseOrValue<BytesLike>,
-      sender: PromiseOrValue<string>,
-      recipient: PromiseOrValue<string>,
-      scalingFactors: PromiseOrValue<BigNumberish>[],
-      userData: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & {from?: PromiseOrValue<string>}
-    ): Promise<PopulatedTransaction>;
-
-    "init(bytes32,address,address,uint256[],bytes)"(
-      poolId: PromiseOrValue<BytesLike>,
-      sender: PromiseOrValue<string>,
-      recipient: PromiseOrValue<string>,
-      scalingFactors: PromiseOrValue<BigNumberish>[],
-      userData: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & {from?: PromiseOrValue<string>}
-    ): Promise<PopulatedTransaction>;
-
-    isOwnerOnlyAction(
-      actionId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    "isOwnerOnlyAction(bytes32)"(
-      actionId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;

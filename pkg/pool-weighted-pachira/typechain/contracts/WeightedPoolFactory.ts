@@ -33,7 +33,7 @@ export interface WeightedPoolFactoryInterface extends utils.Interface {
     "getCreationCodeContracts()": FunctionFragment;
     "getPauseConfiguration()": FunctionFragment;
     "getProtocolFeePercentagesProvider()": FunctionFragment;
-    "getTestMessage()": FunctionFragment;
+    "getTesterMessage()": FunctionFragment;
     "getVault()": FunctionFragment;
     "isDisabled()": FunctionFragment;
     "isPoolFromFactory(address)": FunctionFragment;
@@ -57,8 +57,8 @@ export interface WeightedPoolFactoryInterface extends utils.Interface {
       | "getPauseConfiguration()"
       | "getProtocolFeePercentagesProvider"
       | "getProtocolFeePercentagesProvider()"
-      | "getTestMessage"
-      | "getTestMessage()"
+      | "getTesterMessage"
+      | "getTesterMessage()"
       | "getVault"
       | "getVault()"
       | "isDisabled"
@@ -144,11 +144,11 @@ export interface WeightedPoolFactoryInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "getTestMessage",
+    functionFragment: "getTesterMessage",
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "getTestMessage()",
+    functionFragment: "getTesterMessage()",
     values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "getVault", values?: undefined): string;
@@ -229,11 +229,11 @@ export interface WeightedPoolFactoryInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getTestMessage",
+    functionFragment: "getTesterMessage",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getTestMessage()",
+    functionFragment: "getTesterMessage()",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "getVault", data: BytesLike): Result;
@@ -386,9 +386,9 @@ export interface WeightedPoolFactory extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
-    getTestMessage(overrides?: CallOverrides): Promise<[string]>;
+    getTesterMessage(overrides?: CallOverrides): Promise<[string]>;
 
-    "getTestMessage()"(overrides?: CallOverrides): Promise<[string]>;
+    "getTesterMessage()"(overrides?: CallOverrides): Promise<[string]>;
 
     getVault(overrides?: CallOverrides): Promise<[string]>;
 
@@ -491,9 +491,9 @@ export interface WeightedPoolFactory extends BaseContract {
     overrides?: CallOverrides
   ): Promise<string>;
 
-  getTestMessage(overrides?: CallOverrides): Promise<string>;
+  getTesterMessage(overrides?: CallOverrides): Promise<string>;
 
-  "getTestMessage()"(overrides?: CallOverrides): Promise<string>;
+  "getTesterMessage()"(overrides?: CallOverrides): Promise<string>;
 
   getVault(overrides?: CallOverrides): Promise<string>;
 
@@ -594,9 +594,9 @@ export interface WeightedPoolFactory extends BaseContract {
       overrides?: CallOverrides
     ): Promise<string>;
 
-    getTestMessage(overrides?: CallOverrides): Promise<string>;
+    getTesterMessage(overrides?: CallOverrides): Promise<string>;
 
-    "getTestMessage()"(overrides?: CallOverrides): Promise<string>;
+    "getTesterMessage()"(overrides?: CallOverrides): Promise<string>;
 
     getVault(overrides?: CallOverrides): Promise<string>;
 
@@ -694,9 +694,9 @@ export interface WeightedPoolFactory extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getTestMessage(overrides?: CallOverrides): Promise<BigNumber>;
+    getTesterMessage(overrides?: CallOverrides): Promise<BigNumber>;
 
-    "getTestMessage()"(overrides?: CallOverrides): Promise<BigNumber>;
+    "getTesterMessage()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     getVault(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -794,9 +794,9 @@ export interface WeightedPoolFactory extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    getTestMessage(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getTesterMessage(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    "getTestMessage()"(
+    "getTesterMessage()"(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

@@ -24,7 +24,7 @@ let rateProviders: string[];
 let owner: SignerWithAddress;
 
 const NAME = 'Balancer Pool Token';
-const SYMBOL = 'BPT';
+const SYMBOL = 'BPT_XX';
 const POOL_SWAP_FEE_PERCENTAGE = fp(0.01);
 const WEIGHTS = toNormalizedWeights([fp(30), fp(70), fp(5), fp(5)]);
 
@@ -86,11 +86,11 @@ async function main() {
       owner.address,
       randomBytes(32)
     )
-  ).wait();
+  ).wait();    
 
   const event = expectEvent.inReceipt(receipt, 'PoolCreated');    
   pool = await deployedAt('WeightedPool', event.args.pool);
-  console.log('WeightedPool: ' + await event.args.pool);         
+  console.log('WeightedPoolFactory: ' + await event.args.pool);         
   console.log('     - name: ' + await pool.name());  
   console.log('     - symbol: ' + await pool.symbol());  
   console.log('     - swap fees: ' + await pool.getSwapFeePercentage());   

@@ -53,7 +53,6 @@ contract WeightedPoolFactory is BasePoolFactory {
         bytes32 salt
     ) external returns (address) {
         (uint256 pauseWindowDuration, uint256 bufferPeriodDuration) = getPauseConfiguration();
-
         return
             _create(
                 abi.encode(
@@ -76,7 +75,19 @@ contract WeightedPoolFactory is BasePoolFactory {
             );
     }
 
-    function getTestMessage() external view returns (string memory) {
+/*
+    function init(
+        bytes32 poolId,
+        address sender,
+        address recipient,
+        uint256[] memory scalingFactors,
+        bytes memory userData
+    ) external view returns (uint256, uint256[] memory) {
+        return WeightedPool.init(poolId, sender, recipient, scalingFactors, userData);
+    }   
+*/
+
+    function getTesterMessage() external view returns (string memory) {
         return test_message;
     }
 }

@@ -288,6 +288,17 @@ export default class BaseWeightedPool extends BasePool {
     const to = params.recipient ? TypesConverter.toAddress(params.recipient) : params.from?.address ?? ZERO_ADDRESS;
     const { tokens } = await this.getTokens();
 
+    /*
+    console.log('this.address: '+this.address)
+    console.log('poolId: '+this.poolId)
+    console.log('recipient: '+to)
+    console.log('currentBalances: '+currentBalances)
+    console.log('tokens: '+tokens)
+    console.log('lastChangeBlock: '+params.lastChangeBlock?.valueOf)
+    console.log('protocolFeePercentage: '+params.protocolFeePercentage?.valueOf)
+    console.log('from: '+params.from?.address)
+    */
+
     const tx = await this.vault.joinPool({
       poolAddress: this.address,
       poolId: this.poolId,

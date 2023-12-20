@@ -12,6 +12,7 @@ export type {test};
 export type {BaseWeightedPool} from "./BaseWeightedPool";
 export type {ExternalWeightedMath} from "./ExternalWeightedMath";
 export type {HelloWorld} from "./HelloWorld";
+export type {PachiraWeightedPool} from "./PachiraWeightedPool";
 export type {SimpleBalancerInteraction} from "./SimpleBalancerInteraction";
 export type {WeightedPool} from "./WeightedPool";
 export type {WeightedPoolFactory} from "./WeightedPoolFactory";

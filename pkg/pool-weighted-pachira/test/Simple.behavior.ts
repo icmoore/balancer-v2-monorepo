@@ -71,6 +71,7 @@ export function allInOne(numberOfTokens: number, poolType: WeightedPoolType): vo
 
   async function initJoin(): Promise<void> {
     const { amountsIn, dueProtocolFeeAmounts } = await pool.init({ recipient, initialBalances, from: lp });
+    console.log('lp: '+lp.address)
   }  
 
   async function initPool(): Promise<void> {
@@ -83,6 +84,12 @@ export function allInOne(numberOfTokens: number, poolType: WeightedPoolType): vo
     const amountsIn = ZEROS.map((n, i) => (i === 1 ? fp(0.1) : n));
     expectedBptOut = await pool.estimateBptOut(amountsIn, initialBalances);
     const minimumBptOut = pct(expectedBptOut, 0.99);
+
+    console.log(amountsIn)
+
+    console.log('**minimumBptOut**: '+ minimumBptOut); 
+    console.log('**expectedBptOut**: '+ expectedBptOut); 
+
     const result = await pool.joinGivenIn({ amountsIn, minimumBptOut, recipient, from: lp });  
   }  
 
@@ -156,6 +163,10 @@ export function allInOne(numberOfTokens: number, poolType: WeightedPoolType): vo
   async function poolInfo(context: string): Promise<void> {
     const poolTokens = await pool.getTokens();
     const previousBptBalance = await pool.balanceOf(recipient);
+
+    const poolId = await pool.getPoolId()
+
+    const poolTokens2 = await vault.getPoolTokens(poolId);
     
 
     let message: string = "\n        Weighted pool info: " + context + "+\n";
@@ -163,8 +174,8 @@ export function allInOne(numberOfTokens: number, poolType: WeightedPoolType): vo
     message = message + '        name: '+await pool.name()+'\n'
     message = message + '        symbol: '+await pool.symbol()+'\n'
     message = message + '        vault address: '+await pool.vault.address+'\n'
-    message = message + '        tokens: '+ await poolTokens.tokens +'\n'
-    message = message + '        balances: '+ await poolTokens.balances +'\n'
+    message = message + '        tokens: '+ await poolTokens2.tokens +'\n'
+    message = message + '        balances: '+ await poolTokens2.balances +'\n'
     message = message + '        decimal: '+ await pool.decimals() +'\n'
     message = message + '        supply: '+ await pool.totalSupply() +'\n'
     message = message + '        recipient balance: ' + previousBptBalance+'\n'
@@ -198,7 +209,9 @@ export function allInOne(numberOfTokens: number, poolType: WeightedPoolType): vo
         await deployTokens();
         await defineTokens(numberOfTokens);
         await deployPool({ fromFactory: true });
+        console.log('**********')
         await initJoin();
+        
         await poolInfo('join pool');
       });
 

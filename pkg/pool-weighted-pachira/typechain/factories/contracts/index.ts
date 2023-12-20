@@ -8,6 +8,7 @@ export * as test from "./test";
 export {BaseWeightedPool__factory} from "./BaseWeightedPool__factory";
 export {ExternalWeightedMath__factory} from "./ExternalWeightedMath__factory";
 export {HelloWorld__factory} from "./HelloWorld__factory";
+export {PachiraWeightedPool__factory} from "./PachiraWeightedPool__factory";
 export {SimpleBalancerInteraction__factory} from "./SimpleBalancerInteraction__factory";
 export {WeightedPool__factory} from "./WeightedPool__factory";
 export {WeightedPoolFactory__factory} from "./WeightedPoolFactory__factory";

@@ -57,6 +57,24 @@ export default class WeightedPool extends BaseWeightedPool {
   static async _deployStandalone(params: WeightedPoolDeployment, vault: Vault): Promise<Contract> {
     const { from } = params;
 
+      const pool_params =  
+        {
+          name: NAME,
+          symbol: SYMBOL,
+          tokens: params.tokens.addresses,
+          normalizedWeights: params.weights,
+          rateProviders: TypesConverter.toAddresses(params.rateProviders),
+          assetManagers: params.assetManagers,
+          swapFeePercentage: params.swapFeePercentage,
+        }
+        //console.log('pool_params.name: '+ pool_params.name);  
+        //console.log('pool_params.symbol: '+ pool_params.symbol); 
+        //console.log('pool_params.tokens: '+ pool_params.tokens); 
+        //console.log('pool_params.normalizedWeights: '+ pool_params.normalizedWeights); 
+        //console.log('pool_params.rateProviders: '+ pool_params.rateProviders); 
+        //console.log('pool_params.assetManagers: '+ pool_params.assetManagers); 
+        //console.log('pool_params.swapFeePercentage: '+ pool_params.swapFeePercentage); 
+
     return deploy('v2-pool-weighted/WeightedPool', {
       args: [
         {

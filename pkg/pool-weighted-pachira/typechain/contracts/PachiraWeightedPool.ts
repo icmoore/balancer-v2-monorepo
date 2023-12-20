@@ -21,9 +21,9 @@ import type {
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "../../common";
+} from "../common";
 
-export declare namespace WeightedPool {
+export declare namespace PachiraWeightedPool {
   export type NewPoolParamsStruct = {
     name: PromiseOrValue<string>;
     symbol: PromiseOrValue<string>;
@@ -89,7 +89,7 @@ export declare namespace IPoolSwapStructs {
   };
 }
 
-export interface MockWeightedPoolInterface extends utils.Interface {
+export interface PachiraWeightedPoolInterface extends utils.Interface {
   functions: {
     "DOMAIN_SEPARATOR()": FunctionFragment;
     "allowance(address,address)": FunctionFragment;
@@ -117,11 +117,11 @@ export interface MockWeightedPoolInterface extends utils.Interface {
     "getRateProviders()": FunctionFragment;
     "getScalingFactors()": FunctionFragment;
     "getSwapFeePercentage()": FunctionFragment;
+    "getTestMessage()": FunctionFragment;
     "getVault()": FunctionFragment;
     "inRecoveryMode()": FunctionFragment;
     "increaseAllowance(address,uint256)": FunctionFragment;
     "init(bytes32,address,address,uint256[],bytes)": FunctionFragment;
-    "isOwnerOnlyAction(bytes32)": FunctionFragment;
     "name()": FunctionFragment;
     "nonces(address)": FunctionFragment;
     "onExitPool(bytes32,address,address,uint256[],uint256,uint256,bytes)": FunctionFragment;
@@ -194,6 +194,8 @@ export interface MockWeightedPoolInterface extends utils.Interface {
       | "getScalingFactors()"
       | "getSwapFeePercentage"
       | "getSwapFeePercentage()"
+      | "getTestMessage"
+      | "getTestMessage()"
       | "getVault"
       | "getVault()"
       | "inRecoveryMode"
@@ -202,8 +204,6 @@ export interface MockWeightedPoolInterface extends utils.Interface {
       | "increaseAllowance(address,uint256)"
       | "init"
       | "init(bytes32,address,address,uint256[],bytes)"
-      | "isOwnerOnlyAction"
-      | "isOwnerOnlyAction(bytes32)"
       | "name"
       | "name()"
       | "nonces"
@@ -437,6 +437,14 @@ export interface MockWeightedPoolInterface extends utils.Interface {
     functionFragment: "getSwapFeePercentage()",
     values?: undefined
   ): string;
+  encodeFunctionData(
+    functionFragment: "getTestMessage",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getTestMessage()",
+    values?: undefined
+  ): string;
   encodeFunctionData(functionFragment: "getVault", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "getVault()",
@@ -477,14 +485,6 @@ export interface MockWeightedPoolInterface extends utils.Interface {
       PromiseOrValue<BigNumberish>[],
       PromiseOrValue<BytesLike>
     ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "isOwnerOnlyAction",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "isOwnerOnlyAction(bytes32)",
-    values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(functionFragment: "name()", values?: undefined): string;
@@ -871,6 +871,14 @@ export interface MockWeightedPoolInterface extends utils.Interface {
     functionFragment: "getSwapFeePercentage()",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "getTestMessage",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getTestMessage()",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "getVault", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "getVault()", data: BytesLike): Result;
   decodeFunctionResult(
@@ -892,14 +900,6 @@ export interface MockWeightedPoolInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "init", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "init(bytes32,address,address,uint256[],bytes)",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "isOwnerOnlyAction",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "isOwnerOnlyAction(bytes32)",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
@@ -1103,12 +1103,12 @@ export type TransferEvent = TypedEvent<
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
-export interface MockWeightedPool extends BaseContract {
+export interface PachiraWeightedPool extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: MockWeightedPoolInterface;
+  interface: PachiraWeightedPoolInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -1316,6 +1316,10 @@ export interface MockWeightedPool extends BaseContract {
 
     "getSwapFeePercentage()"(overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    getTestMessage(overrides?: CallOverrides): Promise<[string]>;
+
+    "getTestMessage()"(overrides?: CallOverrides): Promise<[string]>;
+
     getVault(overrides?: CallOverrides): Promise<[string]>;
 
     "getVault()"(overrides?: CallOverrides): Promise<[string]>;
@@ -1353,16 +1357,6 @@ export interface MockWeightedPool extends BaseContract {
       userData: PromiseOrValue<BytesLike>,
       overrides?: Overrides & {from?: PromiseOrValue<string>}
     ): Promise<ContractTransaction>;
-
-    isOwnerOnlyAction(
-      actionId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
-
-    "isOwnerOnlyAction(bytes32)"(
-      actionId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
@@ -1755,6 +1749,10 @@ export interface MockWeightedPool extends BaseContract {
 
   "getSwapFeePercentage()"(overrides?: CallOverrides): Promise<BigNumber>;
 
+  getTestMessage(overrides?: CallOverrides): Promise<string>;
+
+  "getTestMessage()"(overrides?: CallOverrides): Promise<string>;
+
   getVault(overrides?: CallOverrides): Promise<string>;
 
   "getVault()"(overrides?: CallOverrides): Promise<string>;
@@ -1792,16 +1790,6 @@ export interface MockWeightedPool extends BaseContract {
     userData: PromiseOrValue<BytesLike>,
     overrides?: Overrides & {from?: PromiseOrValue<string>}
   ): Promise<ContractTransaction>;
-
-  isOwnerOnlyAction(
-    actionId: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
-
-  "isOwnerOnlyAction(bytes32)"(
-    actionId: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
@@ -2186,6 +2174,10 @@ export interface MockWeightedPool extends BaseContract {
 
     "getSwapFeePercentage()"(overrides?: CallOverrides): Promise<BigNumber>;
 
+    getTestMessage(overrides?: CallOverrides): Promise<string>;
+
+    "getTestMessage()"(overrides?: CallOverrides): Promise<string>;
+
     getVault(overrides?: CallOverrides): Promise<string>;
 
     "getVault()"(overrides?: CallOverrides): Promise<string>;
@@ -2213,7 +2205,9 @@ export interface MockWeightedPool extends BaseContract {
       scalingFactors: PromiseOrValue<BigNumberish>[],
       userData: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
-    ): Promise<[BigNumber, BigNumber[]]>;
+    ): Promise<
+      [BigNumber, BigNumber[]] & {property1: BigNumber; property2: BigNumber[]}
+    >;
 
     "init(bytes32,address,address,uint256[],bytes)"(
       poolId: PromiseOrValue<BytesLike>,
@@ -2222,17 +2216,9 @@ export interface MockWeightedPool extends BaseContract {
       scalingFactors: PromiseOrValue<BigNumberish>[],
       userData: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
-    ): Promise<[BigNumber, BigNumber[]]>;
-
-    isOwnerOnlyAction(
-      actionId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
-
-    "isOwnerOnlyAction(bytes32)"(
-      actionId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
+    ): Promise<
+      [BigNumber, BigNumber[]] & {property1: BigNumber; property2: BigNumber[]}
+    >;
 
     name(overrides?: CallOverrides): Promise<string>;
 
@@ -2665,6 +2651,10 @@ export interface MockWeightedPool extends BaseContract {
 
     "getSwapFeePercentage()"(overrides?: CallOverrides): Promise<BigNumber>;
 
+    getTestMessage(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "getTestMessage()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     getVault(overrides?: CallOverrides): Promise<BigNumber>;
 
     "getVault()"(overrides?: CallOverrides): Promise<BigNumber>;
@@ -2701,16 +2691,6 @@ export interface MockWeightedPool extends BaseContract {
       scalingFactors: PromiseOrValue<BigNumberish>[],
       userData: PromiseOrValue<BytesLike>,
       overrides?: Overrides & {from?: PromiseOrValue<string>}
-    ): Promise<BigNumber>;
-
-    isOwnerOnlyAction(
-      actionId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    "isOwnerOnlyAction(bytes32)"(
-      actionId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
@@ -3119,6 +3099,12 @@ export interface MockWeightedPool extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    getTestMessage(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "getTestMessage()"(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     getVault(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     "getVault()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -3157,16 +3143,6 @@ export interface MockWeightedPool extends BaseContract {
       scalingFactors: PromiseOrValue<BigNumberish>[],
       userData: PromiseOrValue<BytesLike>,
       overrides?: Overrides & {from?: PromiseOrValue<string>}
-    ): Promise<PopulatedTransaction>;
-
-    isOwnerOnlyAction(
-      actionId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    "isOwnerOnlyAction(bytes32)"(
-      actionId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;

@@ -237,6 +237,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ManagedPoolSettings__factory>;
     getContractFactory(
+      name: "PachiraWeightedPool",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.PachiraWeightedPool__factory>;
+    getContractFactory(
       name: "SimpleBalancerInteraction",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.SimpleBalancerInteraction__factory>;
@@ -573,6 +577,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.ManagedPoolSettings>;
+    getContractAt(
+      name: "PachiraWeightedPool",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.PachiraWeightedPool>;
     getContractAt(
       name: "SimpleBalancerInteraction",
       address: string,
