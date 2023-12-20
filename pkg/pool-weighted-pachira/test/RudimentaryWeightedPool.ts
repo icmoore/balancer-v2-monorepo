@@ -98,7 +98,7 @@ async function initRawJoin(): Promise<void> {
   const poolId = await pachiraFactory.getPoolId();
   const poolTokens = await vault.getPoolTokens(poolId)
 
-    const tx = await vault.joinPool({
+  const tx = await vault.joinPool({
                               poolId: poolId,
                               tokens: tokens.addresses,
                               poolAddress: pachiraFactory.address,
@@ -239,11 +239,8 @@ describe("PachiraWeightedPool", () => {
       it('deploy vault and tokens', async () => {
         await deployVault();
         await deployTokens();
-
         await deployWeightedPoolContract();
         await initContractPool()
-
-        //await initJoin();
         await initRawJoin()
         await poolInfo('test') 
         expect(true);
