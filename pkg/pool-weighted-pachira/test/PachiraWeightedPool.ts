@@ -97,10 +97,7 @@ async function initJoin(): Promise<void> {
     const abi = ['uint256', 'uint256[]'];
     const data = [joinKind, initialBalances];
     const userData = defaultAbiCoder.encode(abi,data); 
-
-    //const userData = encodeJoin(Array(4).fill(bn(0)), Array(4).fill(bn(0)) )
-
-
+    
     console.log('vault: '+ vault.address);
     console.log('poolId: '+ poolId);
     console.log('poolId: '+ getPoolAddress(poolId));
@@ -158,7 +155,7 @@ describe("PachiraWeightedPool", () => {
         await deployTokens();
         await deployWeightedPoolContract();
         await initContractPool()
-        //await initJoin();
+        await initJoin();
         //await poolInfo('test') 
         expect(true);
       });   

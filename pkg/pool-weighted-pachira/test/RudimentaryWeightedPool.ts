@@ -17,11 +17,15 @@ import BaseWeightedPool from '@balancer-labs/v2-helpers/src/models/pools/weighte
 const NAME = 'Pachira Balancer Pool Token';
 const SYMBOL = 'BPT';
 const POOL_SWAP_FEE_PERCENTAGE = fp(0.01);
-const WEIGHTS = toNormalizedWeights([fp(30), fp(70), fp(5), fp(5)]);
+
+const numTokens = 3;
+const WEIGHTS = toNormalizedWeights([fp(30), fp(70), fp(5), fp(5)].slice(0, numTokens));
 const INITIAL_BALANCES = [fp(0.9), fp(1.8), fp(2.7), fp(3.6)];
-const weights: BigNumberish[] = WEIGHTS.slice(0, 4);
-const initialBalances = INITIAL_BALANCES.slice(0, 4);
-const ZEROS = Array(4).fill(bn(0));
+const TOKEN_SYMBOLS = ['MKR', 'DAI', 'SNX', 'BAT'].slice(0, numTokens)
+const weights: BigNumberish[] = WEIGHTS.slice(0, numTokens);
+const initialBalances = INITIAL_BALANCES.slice(0, numTokens);
+const ZEROS = Array(3).fill(bn(0));
+
 
 const BASE_PAUSE_WINDOW_DURATION = MONTH * 3;
 const BASE_BUFFER_PERIOD_DURATION = MONTH;
@@ -42,17 +46,19 @@ async function deployVault(): Promise<void> {
 
 async function deployTokens(): Promise<void> {
     const tokenAmounts = fp(100);
-    allTokens = await TokenList.create(['MKR', 'DAI', 'SNX', 'BAT'], { sorted: true });
+    allTokens = await TokenList.create(TOKEN_SYMBOLS, { sorted: true });
     await allTokens.mint({ to: lp, amount: tokenAmounts });
     await allTokens.approve({ to: vault.address, from: lp, amount: tokenAmounts }); 
-    tokens = allTokens.subset(4);
+    tokens = allTokens.subset(numTokens);
+    //for(let i=0; i<allTokens.length; i++){
+    //  console.log(allTokens.tokens[i].symbol); //use i instead of 0
+    //}
 }  
 
 async function deployWeightedPoolContract(): Promise<void>  {
-  console.log('     Deploying PachiraWeightedPool ...');  
+  console.log('     Deploying WeightedPool ...');  
   const params: RawWeightedPoolDeployment = {}
   let null_addr_arr:string[] = ['0x0000000000000000000000000000000000000000',
-                              '0x0000000000000000000000000000000000000000',
                               '0x0000000000000000000000000000000000000000',
                               '0x0000000000000000000000000000000000000000']
 
@@ -74,7 +80,7 @@ async function deployWeightedPoolContract(): Promise<void>  {
                                               recipient.address);                                                                                                                                                                  
 } 
   
-async function initContractPool(): Promise<void> {
+async function initBasePool(): Promise<void> {
     const poolId = await pachiraFactory.getPoolId();
     pachiraPool = new BaseWeightedPool(pachiraFactory,
                                         poolId,
@@ -83,6 +89,7 @@ async function initContractPool(): Promise<void> {
                                         weights,
                                         0,
                                         recipient);
+
 
 }    
 
@@ -108,7 +115,7 @@ async function initRawJoin(): Promise<void> {
                               protocolFeePercentage: 0,
                               data: userData,
                               from: lp
-                            }); 
+                            });                          
 }
     
 async function joinGivenIn(): Promise<void> {
@@ -181,13 +188,14 @@ async function swapGivenOut(): Promise<void> {
 async function poolInfo(context: string): Promise<void> {
     const poolTokens = await pachiraPool.getTokens();
     const previousBptBalance = await pachiraPool.balanceOf(recipient);
+    
 
     let message: string = "\n        Weighted pool info: " + context + "+\n";
     message = message + '        ------------------------\n'
     message = message + '        name: '+await pachiraPool.name()+'\n'
     message = message + '        symbol: '+await pachiraPool.symbol()+'\n'
     message = message + '        vault address: '+await pachiraPool.vault.address+'\n'
-    message = message + '        tokens: '+ await poolTokens.tokens +'\n'
+    message = message + '        tokens: '+ await TOKEN_SYMBOLS +'\n'
     message = message + '        balances: '+ await poolTokens.balances +'\n'
     message = message + '        decimal: '+ await pachiraPool.decimals() +'\n'
     message = message + '        supply: '+ await pachiraPool.totalSupply() +'\n'
@@ -203,7 +211,7 @@ before('setup signers', async () => {
 
 describe("PachiraWeightedPool", () => {
 
-    context('Engage contract', () => {
+    context('Engage factory contract PachiraWeightedPool.sol', () => {
 
       /*
       it('test', async () => {
@@ -231,14 +239,15 @@ describe("PachiraWeightedPool", () => {
         await deployVault();
         await deployTokens();
         await deployWeightedPoolContract();
-        await initContractPool()
         await initRawJoin()
+        await initBasePool()
         await poolInfo('test') 
         expect(true);
       });   
       
       it('join given in', async () => {
-        expect(true);                                       
+        expect(true);    
+        await initBasePool()                                   
         await joinGivenIn()
         await poolInfo('join given in');
       });        
@@ -272,14 +281,10 @@ describe("PachiraWeightedPool", () => {
         await deployVault();
         await deployTokens();
         await deployWeightedPoolContract();
-        await initContractPool()
+        await initBasePool()
         await initJoin();
         await joinGivenIn();
         await swapGivenIn();
-
-        //console.log('contract.address: '+pachiraFactory.address)
-        //console.log('recipient.address: '+recipient.address)
-        //console.log('lp.address: '+lp.address)
       });           
  
       it('swap given out', async () => {
