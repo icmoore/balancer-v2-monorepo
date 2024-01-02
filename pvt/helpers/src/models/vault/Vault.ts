@@ -82,6 +82,7 @@ export default class Vault {
   }
 
   async minimalSwap(params: MinimalSwap): Promise<ContractTransaction> {
+
     return this.instance.callMinimalPoolSwap(
       params.poolAddress,
       {

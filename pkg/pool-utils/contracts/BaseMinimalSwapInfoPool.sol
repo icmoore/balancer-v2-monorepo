@@ -18,6 +18,7 @@ pragma experimental ABIEncoderV2;
 import "@balancer-labs/v2-interfaces/contracts/vault/IMinimalSwapInfoPool.sol";
 
 import "./BasePool.sol";
+import "hardhat/console.sol";
 
 /**
  * @dev Extension of `BasePool`, adding a handler for `IMinimalSwapInfoPool.onSwap`.
@@ -41,6 +42,8 @@ abstract contract BaseMinimalSwapInfoPool is IMinimalSwapInfoPool, BasePool {
 
         balanceTokenIn = _upscale(balanceTokenIn, scalingFactorTokenIn);
         balanceTokenOut = _upscale(balanceTokenOut, scalingFactorTokenOut);
+
+        console.log('BaseMinimalSwapInfoPool.onSwap');
 
         if (request.kind == IVault.SwapKind.GIVEN_IN) {
             // Fees are subtracted before scaling, to reduce the complexity of the rounding direction analysis.

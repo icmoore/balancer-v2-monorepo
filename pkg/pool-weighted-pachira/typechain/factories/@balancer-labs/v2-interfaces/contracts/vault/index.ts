@@ -7,4 +7,5 @@ export {IFlashLoanRecipient__factory} from "./IFlashLoanRecipient__factory";
 export {IGeneralPool__factory} from "./IGeneralPool__factory";
 export {IMinimalSwapInfoPool__factory} from "./IMinimalSwapInfoPool__factory";
 export {IProtocolFeesCollector__factory} from "./IProtocolFeesCollector__factory";
+export {ITimelockAuthorizer__factory} from "./ITimelockAuthorizer__factory";
 export {IVault__factory} from "./IVault__factory";

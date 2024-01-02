@@ -13,6 +13,14 @@ import * as Contracts from ".";
 declare module "hardhat/types/runtime" {
   interface HardhatEthersHelpers extends HardhatEthersHelpersBase {
     getContractFactory(
+      name: "IAuthorizerAdaptor",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IAuthorizerAdaptor__factory>;
+    getContractFactory(
+      name: "IAuthorizerAdaptorEntrypoint",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IAuthorizerAdaptorEntrypoint__factory>;
+    getContractFactory(
       name: "BasePoolUserData",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.BasePoolUserData__factory>;
@@ -113,6 +121,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IProtocolFeesCollector__factory>;
     getContractFactory(
+      name: "ITimelockAuthorizer",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ITimelockAuthorizer__factory>;
+    getContractFactory(
       name: "IVault",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IVault__factory>;
@@ -169,6 +181,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.EOASignaturesValidator__factory>;
     getContractFactory(
+      name: "ExtraCalldataEOASignaturesValidator",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ExtraCalldataEOASignaturesValidator__factory>;
+    getContractFactory(
       name: "SingletonAuthentication",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.SingletonAuthentication__factory>;
@@ -193,6 +209,50 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ERC20Permit__factory>;
     getContractFactory(
+      name: "AssetManagers",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.AssetManagers__factory>;
+    getContractFactory(
+      name: "AssetTransfersHandler",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.AssetTransfersHandler__factory>;
+    getContractFactory(
+      name: "AuthorizerWithAdaptorValidation",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.AuthorizerWithAdaptorValidation__factory>;
+    getContractFactory(
+      name: "TimelockAuthorizer",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.TimelockAuthorizer__factory>;
+    getContractFactory(
+      name: "TimelockAuthorizerManagement",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.TimelockAuthorizerManagement__factory>;
+    getContractFactory(
+      name: "TimelockExecutionHelper",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.TimelockExecutionHelper__factory>;
+    getContractFactory(
+      name: "BalancerPoolToken",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.BalancerPoolToken__factory>;
+    getContractFactory(
+      name: "MinimalSwapInfoPoolsBalance",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.MinimalSwapInfoPoolsBalance__factory>;
+    getContractFactory(
+      name: "TwoTokenPoolsBalance",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.TwoTokenPoolsBalance__factory>;
+    getContractFactory(
+      name: "BasePool",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.BasePool__factory>;
+    getContractFactory(
+      name: "BasePoolAuthorization",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.BasePoolAuthorization__factory>;
+    getContractFactory(
       name: "BaseWeightedPool",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.BaseWeightedPool__factory>;
@@ -200,6 +260,14 @@ declare module "hardhat/types/runtime" {
       name: "ExternalWeightedMath",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ExternalWeightedMath__factory>;
+    getContractFactory(
+      name: "Fees",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Fees__factory>;
+    getContractFactory(
+      name: "FlashLoans",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.FlashLoans__factory>;
     getContractFactory(
       name: "HelloWorld",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -237,13 +305,49 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ManagedPoolSettings__factory>;
     getContractFactory(
+      name: "NewBasePool",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.NewBasePool__factory>;
+    getContractFactory(
       name: "PachiraWeightedPool",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.PachiraWeightedPool__factory>;
     getContractFactory(
+      name: "PoolBalances",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.PoolBalances__factory>;
+    getContractFactory(
+      name: "PoolRegistry",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.PoolRegistry__factory>;
+    getContractFactory(
+      name: "PoolTokens",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.PoolTokens__factory>;
+    getContractFactory(
+      name: "ProtocolFeePercentagesProvider",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ProtocolFeePercentagesProvider__factory>;
+    getContractFactory(
+      name: "ProtocolFeesCollector",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ProtocolFeesCollector__factory>;
+    getContractFactory(
+      name: "RecoveryMode",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.RecoveryMode__factory>;
+    getContractFactory(
       name: "SimpleBalancerInteraction",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.SimpleBalancerInteraction__factory>;
+    getContractFactory(
+      name: "Swaps",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Swaps__factory>;
+    getContractFactory(
+      name: "MockAuthorizerAdaptorEntrypoint",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.MockAuthorizerAdaptorEntrypoint__factory>;
     getContractFactory(
       name: "MockCircuitBreakerLib",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -269,6 +373,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.MockManagedPoolTokenStorageLib__factory>;
     getContractFactory(
+      name: "MockNewBasePool",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.MockNewBasePool__factory>;
+    getContractFactory(
       name: "MockValueCompression",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.MockValueCompression__factory>;
@@ -285,6 +393,18 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.MockWithdrawDepositAssetManager__factory>;
     getContractFactory(
+      name: "UserBalance",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.UserBalance__factory>;
+    getContractFactory(
+      name: "Vault",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Vault__factory>;
+    getContractFactory(
+      name: "VaultAuthorization",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.VaultAuthorization__factory>;
+    getContractFactory(
       name: "WeightedPool",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.WeightedPool__factory>;
@@ -297,6 +417,16 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.WeightedPoolProtocolFees__factory>;
 
+    getContractAt(
+      name: "IAuthorizerAdaptor",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IAuthorizerAdaptor>;
+    getContractAt(
+      name: "IAuthorizerAdaptorEntrypoint",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IAuthorizerAdaptorEntrypoint>;
     getContractAt(
       name: "BasePoolUserData",
       address: string,
@@ -423,6 +553,11 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.IProtocolFeesCollector>;
     getContractAt(
+      name: "ITimelockAuthorizer",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ITimelockAuthorizer>;
+    getContractAt(
       name: "IVault",
       address: string,
       signer?: ethers.Signer
@@ -493,6 +628,11 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.EOASignaturesValidator>;
     getContractAt(
+      name: "ExtraCalldataEOASignaturesValidator",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ExtraCalldataEOASignaturesValidator>;
+    getContractAt(
       name: "SingletonAuthentication",
       address: string,
       signer?: ethers.Signer
@@ -523,6 +663,61 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.ERC20Permit>;
     getContractAt(
+      name: "AssetManagers",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.AssetManagers>;
+    getContractAt(
+      name: "AssetTransfersHandler",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.AssetTransfersHandler>;
+    getContractAt(
+      name: "AuthorizerWithAdaptorValidation",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.AuthorizerWithAdaptorValidation>;
+    getContractAt(
+      name: "TimelockAuthorizer",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.TimelockAuthorizer>;
+    getContractAt(
+      name: "TimelockAuthorizerManagement",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.TimelockAuthorizerManagement>;
+    getContractAt(
+      name: "TimelockExecutionHelper",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.TimelockExecutionHelper>;
+    getContractAt(
+      name: "BalancerPoolToken",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.BalancerPoolToken>;
+    getContractAt(
+      name: "MinimalSwapInfoPoolsBalance",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.MinimalSwapInfoPoolsBalance>;
+    getContractAt(
+      name: "TwoTokenPoolsBalance",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.TwoTokenPoolsBalance>;
+    getContractAt(
+      name: "BasePool",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.BasePool>;
+    getContractAt(
+      name: "BasePoolAuthorization",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.BasePoolAuthorization>;
+    getContractAt(
       name: "BaseWeightedPool",
       address: string,
       signer?: ethers.Signer
@@ -532,6 +727,16 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.ExternalWeightedMath>;
+    getContractAt(
+      name: "Fees",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Fees>;
+    getContractAt(
+      name: "FlashLoans",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.FlashLoans>;
     getContractAt(
       name: "HelloWorld",
       address: string,
@@ -578,15 +783,60 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.ManagedPoolSettings>;
     getContractAt(
+      name: "NewBasePool",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.NewBasePool>;
+    getContractAt(
       name: "PachiraWeightedPool",
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.PachiraWeightedPool>;
     getContractAt(
+      name: "PoolBalances",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.PoolBalances>;
+    getContractAt(
+      name: "PoolRegistry",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.PoolRegistry>;
+    getContractAt(
+      name: "PoolTokens",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.PoolTokens>;
+    getContractAt(
+      name: "ProtocolFeePercentagesProvider",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ProtocolFeePercentagesProvider>;
+    getContractAt(
+      name: "ProtocolFeesCollector",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ProtocolFeesCollector>;
+    getContractAt(
+      name: "RecoveryMode",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.RecoveryMode>;
+    getContractAt(
       name: "SimpleBalancerInteraction",
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.SimpleBalancerInteraction>;
+    getContractAt(
+      name: "Swaps",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Swaps>;
+    getContractAt(
+      name: "MockAuthorizerAdaptorEntrypoint",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.MockAuthorizerAdaptorEntrypoint>;
     getContractAt(
       name: "MockCircuitBreakerLib",
       address: string,
@@ -618,6 +868,11 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.MockManagedPoolTokenStorageLib>;
     getContractAt(
+      name: "MockNewBasePool",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.MockNewBasePool>;
+    getContractAt(
       name: "MockValueCompression",
       address: string,
       signer?: ethers.Signer
@@ -637,6 +892,21 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.MockWithdrawDepositAssetManager>;
+    getContractAt(
+      name: "UserBalance",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.UserBalance>;
+    getContractAt(
+      name: "Vault",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Vault>;
+    getContractAt(
+      name: "VaultAuthorization",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.VaultAuthorization>;
     getContractAt(
       name: "WeightedPool",
       address: string,

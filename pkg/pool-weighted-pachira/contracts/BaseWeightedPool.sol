@@ -109,6 +109,7 @@ abstract contract BaseWeightedPool is BaseMinimalSwapInfoPool {
         uint256 currentBalanceTokenIn,
         uint256 currentBalanceTokenOut
     ) internal virtual override returns (uint256) {
+
         return
             WeightedMath._calcOutGivenIn(
                 currentBalanceTokenIn,

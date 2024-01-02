@@ -77,7 +77,8 @@ async function deployWeightedPoolContract(): Promise<void>  {
                                               vault.getFeesProvider().address,
                                               BASE_PAUSE_WINDOW_DURATION, 
                                               BASE_BUFFER_PERIOD_DURATION,
-                                              recipient.address);                                                                                                                                                                  
+                                              recipient.address);   
+                                                                                    
 } 
   
 async function initBasePool(): Promise<void> {
@@ -115,7 +116,9 @@ async function initRawJoin(): Promise<void> {
                               protocolFeePercentage: 0,
                               data: userData,
                               from: lp
-                            });                          
+                            }); 
+                            
+  //console.log(tx)                         
 }
     
 async function joinGivenIn(): Promise<void> {
@@ -282,7 +285,7 @@ describe("PachiraWeightedPool", () => {
         await deployTokens();
         await deployWeightedPoolContract();
         await initBasePool()
-        await initJoin();
+        await initRawJoin()
         await joinGivenIn();
         await swapGivenIn();
       });           

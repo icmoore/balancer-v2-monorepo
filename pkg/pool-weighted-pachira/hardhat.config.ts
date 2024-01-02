@@ -16,7 +16,7 @@ task(TASK_COMPILE).setAction(overrideQueryFunctions);
 export default {
   networks: {
     hardhat: {
-      allowUnlimitedContractSize: true,
+      allowUnlimitedContractSize: true,  
     },
   },
   solidity: {

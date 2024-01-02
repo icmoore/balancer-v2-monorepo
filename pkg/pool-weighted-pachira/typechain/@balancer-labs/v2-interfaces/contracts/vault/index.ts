@@ -7,4 +7,5 @@ export type {IFlashLoanRecipient} from "./IFlashLoanRecipient";
 export type {IGeneralPool} from "./IGeneralPool";
 export type {IMinimalSwapInfoPool} from "./IMinimalSwapInfoPool";
 export type {IProtocolFeesCollector} from "./IProtocolFeesCollector";
+export type {ITimelockAuthorizer} from "./ITimelockAuthorizer";
 export type {IVault} from "./IVault";

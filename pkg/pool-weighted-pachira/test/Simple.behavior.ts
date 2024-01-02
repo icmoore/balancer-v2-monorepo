@@ -163,9 +163,7 @@ export function allInOne(numberOfTokens: number, poolType: WeightedPoolType): vo
   async function poolInfo(context: string): Promise<void> {
     const poolTokens = await pool.getTokens();
     const previousBptBalance = await pool.balanceOf(recipient);
-
     const poolId = await pool.getPoolId()
-
     const poolTokens2 = await vault.getPoolTokens(poolId);
     
 

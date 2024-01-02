@@ -6,5 +6,6 @@ export type {temporarilyPausableSol};
 export type {Authentication} from "./Authentication";
 export type {BaseSplitCodeFactory} from "./BaseSplitCodeFactory";
 export type {EOASignaturesValidator} from "./EOASignaturesValidator";
+export type {ExtraCalldataEOASignaturesValidator} from "./ExtraCalldataEOASignaturesValidator";
 export type {SingletonAuthentication} from "./SingletonAuthentication";
 export type {Version} from "./Version";

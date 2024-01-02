@@ -195,6 +195,10 @@ export default class BaseWeightedPool extends BasePool {
 
   async swap(params: MinimalSwap): Promise<SwapResult> {
     let receipt: ContractReceipt;
+
+
+    console.log(params);  
+
     if (this.vault.mocked) {
       const tx = await this.vault.minimalSwap(params);
       receipt = await tx.wait();
