@@ -5,7 +5,6 @@ import { Contract } from 'ethers';
 import { PachiraWeightedPool } from '../typechain';
 import { Swaps } from '../typechain/contracts/Swaps';  
 import { PachiraWeightedPool__factory } from '../typechain/factories/contracts/PachiraWeightedPool__factory';      
-import { Swaps__factory } from '../typechain/factories/contracts/Swaps__factory';   
 import { TimelockAuthorizer__factory } from '../typechain/factories/contracts/authorizer/TimelockAuthorizer__factory';     
 import { Vault } from '../typechain/contracts/Vault';        
 import { Vault__factory } from '../typechain/factories/contracts/Vault__factory';       
@@ -19,7 +18,7 @@ import { RawWeightedPoolDeployment} from '@balancer-labs/v2-helpers/src/models/p
 import { MONTH } from '@balancer-labs/v2-helpers/src/time';
 import TokenList from '@balancer-labs/v2-helpers/src/models/tokens/TokenList';
 import {SingleSwap, SwapKind, FundManagement, JoinPoolRequest, WeightedPoolEncoder} from '@balancer-labs/balancer-js';
-import { deploy, deployedAt, getArtifact} from '@balancer-labs/v2-helpers/src/contract';
+import { deploy, getArtifact} from '@balancer-labs/v2-helpers/src/contract';
 import { impersonateAccount, setBalance } from '@nomicfoundation/hardhat-network-helpers';
 
 const NAME = 'Pachira Balancer Pool Token';
@@ -146,37 +145,6 @@ async function deployRawWeightedPoolContract(): Promise<void>  {
     const tx = await vault.connect(lp).swap(singleSwap, funds, 0, MAX_UINT256)
   }
 
-  async function rawDecoupledSwap(): Promise<void> {
-
-    const poolId = await pachiraFactory.getPoolId();
-    const amount = fp(0.1);
-    const amountWithFees = fpMul(amount, POOL_SWAP_FEE_PERCENTAGE.add(fp(1)));
-
-    const singleSwap: SingleSwap = {
-      poolId: poolId,
-      kind: SwapKind.GivenIn,
-      assetIn: tokens.get(1).instance.address,
-      assetOut: tokens.get(0).instance.address,
-      amount: amountWithFees, // Needs to be > 0
-      userData: '0x',
-    };
-  
-    const funds: FundManagement = {
-      sender: lp.address,
-      recipient: recipient.address,
-      fromInternalBalance: false,
-      toInternalBalance: false,
-    };
-
-
-    //await swapsFactory.connect(deployer).swap(singleSwap, funds, 0, MAX_UINT256)
-    //await swapsFactory.swap(singleSwap, funds, 0, MAX_UINT256)
-
-    //swapsFactory = await new Swaps__factory()
-    //swapsFactory.swap(singleSwap, funds, 0, MAX_UINT256)
-
-  }    
-
   async function poolInfo(context: string): Promise<void> {
     const poolId = await pachiraFactory.getPoolId();
     const poolTokens = await vault.getPoolTokens(poolId)
@@ -206,9 +174,6 @@ describe("PachiraWeightedPool", () => {
         await protocolFeeProvider();
         await deployRawWeightedPoolContract();
         await initRawJoin()        
-
-        await rawDecoupledSwap();
-
         await poolInfo('post join');
         await rawSwapVault();
         await poolInfo('post swap');
