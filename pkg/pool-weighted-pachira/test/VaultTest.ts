@@ -4,9 +4,13 @@ import { expect } from 'chai';
 import { Contract } from 'ethers';
 import { PachiraWeightedPool } from '../typechain';
 import { Swaps } from '../typechain/contracts/Swaps';  
+import { Vault } from '../typechain/contracts/Vault';    
+import { MockAuthorizerAdaptorEntrypoint } from '../typechain/contracts/test/MockAuthorizerAdaptorEntrypoint';   
+import { ProtocolFeePercentagesProvider } from '../typechain/contracts/ProtocolFeePercentagesProvider';
 import { PachiraWeightedPool__factory } from '../typechain/factories/contracts/PachiraWeightedPool__factory';      
+import { ProtocolFeePercentagesProvider__factory } from '../typechain/factories/contracts/ProtocolFeePercentagesProvider__factory';     
+import { MockAuthorizerAdaptorEntrypoint__factory } from '../typechain/factories/contracts/test/MockAuthorizerAdaptorEntrypoint__factory';     
 import { TimelockAuthorizer__factory } from '../typechain/factories/contracts/authorizer/TimelockAuthorizer__factory';     
-import { Vault } from '../typechain/contracts/Vault';        
 import { Vault__factory } from '../typechain/factories/contracts/Vault__factory';       
 import { toNormalizedWeights } from '@balancer-labs/balancer-js';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
@@ -49,11 +53,14 @@ let admin: SignerWithAddress;
 let pachiraFactory: PachiraWeightedPool;
 let swapsFactory: Swaps;
 let authorizer: Contract;
-let feesProvider: Contract;
+//let feesProvider: Contract;
+let feesProvider: ProtocolFeePercentagesProvider;
 let vault: Vault;
+let entrypoint: MockAuthorizerAdaptorEntrypoint;
 
 async function deployRawVault(): Promise<void>  {
-  const entrypoint = await deploy('MockAuthorizerAdaptorEntrypoint');
+  //const entrypoint = await deploy('MockAuthorizerAdaptorEntrypoint');
+  entrypoint = await new MockAuthorizerAdaptorEntrypoint__factory(deployer).deploy()
   authorizer = await new TimelockAuthorizer__factory(deployer).deploy(admin.address, ZERO_ADDRESS, entrypoint.address, MONTH)
   vault = await new Vault__factory(deployer).deploy(authorizer.address, ZERO_ADDRESS, 0, 0)
   await impersonateAccount(vault.address);
@@ -70,17 +77,18 @@ async function deployTokens(): Promise<void> {
 }  
 
 async function protocolFeeProvider(): Promise<void> {
-    const artifact = getArtifact('ProtocolFeePercentagesProvider');
-    const factory = new ethers.ContractFactory(artifact.abi, artifact.bytecode, (await ethers.getSigners())[0]);
-    feesProvider = await factory.deploy(vault.address, MAX_YIELD_VALUE, MAX_AUM_VALUE);
+    //const artifact = getArtifact('ProtocolFeePercentagesProvider');
+    //const factory = new ethers.ContractFactory(artifact.abi, artifact.bytecode, (await ethers.getSigners())[0]);
+    //feesProvider = await factory.deploy(vault.address, MAX_YIELD_VALUE, MAX_AUM_VALUE);
+    feesProvider = await new ProtocolFeePercentagesProvider__factory(deployer).deploy(vault.address, 
+                                                                                        MAX_YIELD_VALUE, 
+                                                                                        MAX_AUM_VALUE);
 } 
 
 async function deployRawWeightedPoolContract(): Promise<void>  {
     console.log('     Deploying WeightedPool ...');  
     const params: RawWeightedPoolDeployment = {}
-    let null_addr_arr:string[] = ['0x0000000000000000000000000000000000000000',
-                                '0x0000000000000000000000000000000000000000',
-                                '0x0000000000000000000000000000000000000000']
+    let null_addr_arr:string[] = [ZERO_ADDRESS,ZERO_ADDRESS,ZERO_ADDRESS]
   
     const pool_params =  {
       name: NAME,
