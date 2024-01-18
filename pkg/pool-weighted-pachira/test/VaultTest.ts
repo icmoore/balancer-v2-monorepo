@@ -2,6 +2,10 @@
 import { ethers } from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
+import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { defaultAbiCoder } from '@ethersproject/abi';
+import { impersonateAccount, setBalance } from '@nomicfoundation/hardhat-network-helpers';
+
 import { PachiraWeightedPool } from '../typechain';
 import { Swaps } from '../typechain/contracts/Swaps';  
 import { Vault } from '../typechain/contracts/Vault';    
@@ -12,18 +16,15 @@ import { ProtocolFeePercentagesProvider__factory } from '../typechain/factories/
 import { MockAuthorizerAdaptorEntrypoint__factory } from '../typechain/factories/contracts/test/MockAuthorizerAdaptorEntrypoint__factory';     
 import { TimelockAuthorizer__factory } from '../typechain/factories/contracts/authorizer/TimelockAuthorizer__factory';     
 import { Vault__factory } from '../typechain/factories/contracts/Vault__factory';       
-import { toNormalizedWeights } from '@balancer-labs/balancer-js';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
-import { defaultAbiCoder } from '@ethersproject/abi';
 
+import { toNormalizedWeights } from '@balancer-labs/balancer-js';
 import { MAX_UINT256, ZERO_ADDRESS } from '@balancer-labs/v2-helpers/src/constants';
 import { BigNumberish, fp, fpMul, bn} from '@balancer-labs/v2-helpers/src/numbers';
-import { RawWeightedPoolDeployment} from '@balancer-labs/v2-helpers/src/models/pools/weighted/types';
 import { MONTH } from '@balancer-labs/v2-helpers/src/time';
 import TokenList from '@balancer-labs/v2-helpers/src/models/tokens/TokenList';
 import {SingleSwap, SwapKind, FundManagement, JoinPoolRequest, WeightedPoolEncoder} from '@balancer-labs/balancer-js';
 import { deploy, getArtifact} from '@balancer-labs/v2-helpers/src/contract';
-import { impersonateAccount, setBalance } from '@nomicfoundation/hardhat-network-helpers';
+
 
 const NAME = 'Pachira Balancer Pool Token';
 const SYMBOL = 'BPT';
@@ -87,7 +88,6 @@ async function protocolFeeProvider(): Promise<void> {
 
 async function deployRawWeightedPoolContract(): Promise<void>  {
     console.log('     Deploying WeightedPool ...');  
-    const params: RawWeightedPoolDeployment = {}
     let null_addr_arr:string[] = [ZERO_ADDRESS,ZERO_ADDRESS,ZERO_ADDRESS]
   
     const pool_params =  {
