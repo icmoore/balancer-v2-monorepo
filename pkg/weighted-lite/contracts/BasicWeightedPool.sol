@@ -21,7 +21,7 @@ import "./WeightedPoolProtocolFees.sol";
 /**
  * @dev Basic Weighted Pool with immutable weights.
  */
-contract PachiraWeightedPool is BaseWeightedPool, WeightedPoolProtocolFees {
+contract BasicWeightedPool is BaseWeightedPool, WeightedPoolProtocolFees {
     using FixedPoint for uint256;
     string private test_message;
 

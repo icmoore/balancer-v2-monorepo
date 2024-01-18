@@ -13,3 +13,4 @@ export {MockValueCompression__factory} from "./MockValueCompression__factory";
 export {MockWeightedPool__factory} from "./MockWeightedPool__factory";
 export {MockWeightedPoolProtocolFees__factory} from "./MockWeightedPoolProtocolFees__factory";
 export {MockWithdrawDepositAssetManager__factory} from "./MockWithdrawDepositAssetManager__factory";
+export {TestToken__factory} from "./TestToken__factory";

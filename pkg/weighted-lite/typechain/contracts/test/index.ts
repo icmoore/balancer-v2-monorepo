@@ -13,3 +13,4 @@ export type {MockValueCompression} from "./MockValueCompression";
 export type {MockWeightedPool} from "./MockWeightedPool";
 export type {MockWeightedPoolProtocolFees} from "./MockWeightedPoolProtocolFees";
 export type {MockWithdrawDepositAssetManager} from "./MockWithdrawDepositAssetManager";
+export type {TestToken} from "./TestToken";

@@ -257,6 +257,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.BaseWeightedPool__factory>;
     getContractFactory(
+      name: "BasicWeightedPool",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.BasicWeightedPool__factory>;
+    getContractFactory(
       name: "ExternalWeightedMath",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ExternalWeightedMath__factory>;
@@ -509,6 +513,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ERC20__factory>;
     getContractFactory(
+      name: "ERC20Burnable",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ERC20Burnable__factory>;
+    getContractFactory(
       name: "ERC20Permit",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ERC20Permit__factory>;
@@ -568,6 +576,10 @@ declare module "hardhat/types/runtime" {
       name: "MockWithdrawDepositAssetManager",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.MockWithdrawDepositAssetManager__factory>;
+    getContractFactory(
+      name: "TestToken",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.TestToken__factory>;
     getContractFactory(
       name: "UserBalance",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -899,6 +911,11 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.BaseWeightedPool>;
     getContractAt(
+      name: "BasicWeightedPool",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.BasicWeightedPool>;
+    getContractAt(
       name: "ExternalWeightedMath",
       address: string,
       signer?: ethers.Signer
@@ -1214,6 +1231,11 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.ERC20>;
     getContractAt(
+      name: "ERC20Burnable",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ERC20Burnable>;
+    getContractAt(
       name: "ERC20Permit",
       address: string,
       signer?: ethers.Signer
@@ -1288,6 +1310,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.MockWithdrawDepositAssetManager>;
+    getContractAt(
+      name: "TestToken",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.TestToken>;
     getContractAt(
       name: "UserBalance",
       address: string,

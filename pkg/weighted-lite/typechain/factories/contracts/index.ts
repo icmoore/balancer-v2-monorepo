@@ -16,6 +16,7 @@ export {BalancerPoolToken__factory} from "./BalancerPoolToken__factory";
 export {BasePool__factory} from "./BasePool__factory";
 export {BasePoolAuthorization__factory} from "./BasePoolAuthorization__factory";
 export {BaseWeightedPool__factory} from "./BaseWeightedPool__factory";
+export {BasicWeightedPool__factory} from "./BasicWeightedPool__factory";
 export {ExternalWeightedMath__factory} from "./ExternalWeightedMath__factory";
 export {Fees__factory} from "./Fees__factory";
 export {FlashLoans__factory} from "./FlashLoans__factory";

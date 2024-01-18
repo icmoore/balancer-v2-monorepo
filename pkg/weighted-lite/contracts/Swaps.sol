@@ -71,7 +71,8 @@ abstract contract Swaps is ReentrancyGuard, PoolBalances {
         returns (uint256 amountCalculated)
     {
 
-        console.log('Swaps.swap(...)');
+        //console.log('Swaps.swap(...)');
+
         // The deadline is timestamp-based: it should not be relied upon for sub-minute accuracy.
         // solhint-disable-next-line not-rely-on-time
         _require(block.timestamp <= deadline, Errors.SWAP_DEADLINE);

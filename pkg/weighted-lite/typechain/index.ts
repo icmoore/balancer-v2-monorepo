@@ -122,6 +122,8 @@ export type {TwoTokenPoolsBalance} from "./contracts/balances/TwoTokenPoolsBalan
 export {TwoTokenPoolsBalance__factory} from "./factories/contracts/balances/TwoTokenPoolsBalance__factory";
 export type {BaseWeightedPool} from "./contracts/BaseWeightedPool";
 export {BaseWeightedPool__factory} from "./factories/contracts/BaseWeightedPool__factory";
+export type {BasicWeightedPool} from "./contracts/BasicWeightedPool";
+export {BasicWeightedPool__factory} from "./factories/contracts/BasicWeightedPool__factory";
 export type {ExternalWeightedMath} from "./contracts/ExternalWeightedMath";
 export {ExternalWeightedMath__factory} from "./factories/contracts/ExternalWeightedMath__factory";
 export type {Fees} from "./contracts/Fees";
@@ -160,6 +162,8 @@ export type {ProtocolFeesCollector} from "./contracts/ProtocolFeesCollector";
 export {ProtocolFeesCollector__factory} from "./factories/contracts/ProtocolFeesCollector__factory";
 export type {SimpleBalancerInteraction} from "./contracts/SimpleBalancerInteraction";
 export {SimpleBalancerInteraction__factory} from "./factories/contracts/SimpleBalancerInteraction__factory";
+export type {ERC20Burnable} from "./contracts/solidity-utils/openzeppelin/ERC20Burnable";
+export {ERC20Burnable__factory} from "./factories/contracts/solidity-utils/openzeppelin/ERC20Burnable__factory";
 export type {Swaps} from "./contracts/Swaps";
 export {Swaps__factory} from "./factories/contracts/Swaps__factory";
 export type {MockAuthorizerAdaptorEntrypoint} from "./contracts/test/MockAuthorizerAdaptorEntrypoint";
@@ -186,6 +190,8 @@ export type {MockWeightedPoolProtocolFees} from "./contracts/test/MockWeightedPo
 export {MockWeightedPoolProtocolFees__factory} from "./factories/contracts/test/MockWeightedPoolProtocolFees__factory";
 export type {MockWithdrawDepositAssetManager} from "./contracts/test/MockWithdrawDepositAssetManager";
 export {MockWithdrawDepositAssetManager__factory} from "./factories/contracts/test/MockWithdrawDepositAssetManager__factory";
+export type {TestToken} from "./contracts/test/TestToken";
+export {TestToken__factory} from "./factories/contracts/test/TestToken__factory";
 export type {UserBalance} from "./contracts/UserBalance";
 export {UserBalance__factory} from "./factories/contracts/UserBalance__factory";
 export type {Vault} from "./contracts/Vault";

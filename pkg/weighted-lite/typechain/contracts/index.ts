@@ -25,6 +25,7 @@ export type {BalancerPoolToken} from "./BalancerPoolToken";
 export type {BasePool} from "./BasePool";
 export type {BasePoolAuthorization} from "./BasePoolAuthorization";
 export type {BaseWeightedPool} from "./BaseWeightedPool";
+export type {BasicWeightedPool} from "./BasicWeightedPool";
 export type {ExternalWeightedMath} from "./ExternalWeightedMath";
 export type {Fees} from "./Fees";
 export type {FlashLoans} from "./FlashLoans";
