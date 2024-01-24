@@ -29,13 +29,18 @@
     "test-fuzz": "forge test"
   },
   "devDependencies": {
+    "@balancer-labs/balancer-js": "workspace:*",
     "@balancer-labs/v2-common": "workspace:*",
     "@balancer-labs/v2-helpers": "workspace:*",
     "@balancer-labs/v2-interfaces": "workspace:*",
     "@balancer-labs/v2-pool-utils": "workspace:*",
     "@balancer-labs/v2-solidity-utils": "workspace:*",
+    "@ethersproject/abi": "^5.6.3",
+    "@ethersproject/providers": "^5.6.8",
     "@nomiclabs/hardhat-ethers": "^2.2.1",
     "@nomiclabs/hardhat-waffle": "^2.0.3",
+    "@typechain/ethers-v5": "^10.0.0",
+    "@typechain/hardhat": "^6.0.0",
     "@types/chai": "^4.3.3",
     "@types/lodash": "^4.14.186",
     "@types/mocha": "^10.0.0",
@@ -63,6 +68,7 @@
     "solhint": "^3.2.0",
     "solhint-plugin-prettier": "^0.0.4",
     "ts-node": "^10.9.1",
+    "typechain": "^8.0.0",
     "typescript": "^4.0.2"
   }
 }

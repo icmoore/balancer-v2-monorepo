@@ -297,13 +297,18 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@balancer-labs/v2-pool-stable-pachira@workspace:pkg/pool-stable-pachira"
   dependencies:
+    "@balancer-labs/balancer-js": "workspace:*"
     "@balancer-labs/v2-common": "workspace:*"
     "@balancer-labs/v2-helpers": "workspace:*"
     "@balancer-labs/v2-interfaces": "workspace:*"
     "@balancer-labs/v2-pool-utils": "workspace:*"
     "@balancer-labs/v2-solidity-utils": "workspace:*"
+    "@ethersproject/abi": "npm:^5.6.3"
+    "@ethersproject/providers": "npm:^5.6.8"
     "@nomiclabs/hardhat-ethers": "npm:^2.2.1"
     "@nomiclabs/hardhat-waffle": "npm:^2.0.3"
+    "@typechain/ethers-v5": "npm:^10.0.0"
+    "@typechain/hardhat": "npm:^6.0.0"
     "@types/chai": "npm:^4.3.3"
     "@types/lodash": "npm:^4.14.186"
     "@types/mocha": "npm:^10.0.0"
@@ -331,6 +336,7 @@ __metadata:
     solhint: "npm:^3.2.0"
     solhint-plugin-prettier: "npm:^0.0.4"
     ts-node: "npm:^10.9.1"
+    typechain: "npm:^8.0.0"
     typescript: "npm:^4.0.2"
   languageName: unknown
   linkType: soft

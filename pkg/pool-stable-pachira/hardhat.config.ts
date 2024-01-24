@@ -1,6 +1,7 @@
 import '@nomiclabs/hardhat-ethers';
 import '@nomiclabs/hardhat-waffle';
 import 'hardhat-ignore-warnings';
+import "@typechain/hardhat";
 
 import { hardhatBaseConfig } from '@balancer-labs/v2-common';
 import { name } from './package.json';
@@ -14,12 +15,16 @@ task(TASK_COMPILE).setAction(overrideQueryFunctions);
 export default {
   networks: {
     hardhat: {
-      allowUnlimitedContractSize: true,
+      allowUnlimitedContractSize: true,  
     },
   },
   solidity: {
     compilers: hardhatBaseConfig.compilers,
     overrides: { ...hardhatBaseConfig.overrides(name) },
   },
+  typechain: {
+    alwaysGenerateOverloads: true,
+    outDir: 'typechain',
+  }, 
   warnings: hardhatBaseConfig.warnings,
 };
