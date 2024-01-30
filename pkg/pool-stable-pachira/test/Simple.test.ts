@@ -6,6 +6,7 @@ import { impersonateAccount, setBalance } from '@nomicfoundation/hardhat-network
 import { deploy, deployedAt, getArtifact } from '@balancer-labs/v2-helpers/src/contract';
 import { sharedBeforeEach } from '@balancer-labs/v2-common/sharedBeforeEach';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import { SwapKind } from '@balancer-labs/balancer-js';
 
 import { BigNumberish, bn, fp, FP_ONE, FP_ZERO} from '@balancer-labs/v2-helpers/src/numbers';
 import { ZERO_ADDRESS } from '@balancer-labs/v2-helpers/src/constants';
@@ -50,7 +51,7 @@ async function deployTokens(): Promise<void> {
     const tokenAmounts = fp(100);
     tokens = await TokenList.create(TOKEN_SYMBOLS, { sorted: true });
     await tokens.mint({ to: lp, amount: tokenAmounts });
-    await tokens.approve({ to: vault.address, from: lp, amount: tokenAmounts }); 
+    //await tokens.approve({ to: vault.address, from: lp, amount: tokenAmounts }); 
 }  
 
 async function deployPool(
@@ -85,18 +86,22 @@ async function deployPool(
 async function initPool(): Promise<void> {
   bptIndex = await pool.getBptIndex();
   initialBalances = Array.from({ length: numTokens + 1 }).map((_, i) => (i == bptIndex ? 0 : fp(1 - i / 10)));  
-  await pool.init({ initialBalances, recipient: lp });
+  const bptBalance = await pool.balanceOf(lp);
+
+  await tokens.approve({ from: lp, to: pool.vault });
+  await pool.instance.connect(lp).approve(pool.vault.address, bptBalance);
+  await pool.init({ from: lp, recipient: lp.address, initialBalances, skipMint: true });
+  console.log('balanceOf '+await pool.balanceOf(recipient));  
 }  
 
 async function swapPool(): Promise<void> {
   const amountIn = fp(0.1);
-
-  await tokens.mint({ to: lp, fp(100); });
-  await tokens.approve({ from: lp, to: pool.vault });
-
-  const amountOut = pool.swapGivenIn({ in: tokens.first, out: tokens.second, amount: amountIn, recipient });
-  console.log('amountIn '+amountIn);  
-  console.log('amountOut '+ amountOut);  
+  await pool.swapGivenIn({ in: tokens.first, 
+                            out: tokens.second, 
+                            amount: amountIn,
+                            from: lp, 
+                            recipient: lp
+                          });
 }  
 
 
