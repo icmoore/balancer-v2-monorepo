@@ -130,6 +130,8 @@ export type {PoolRegistry} from "./contracts/PoolRegistry";
 export {PoolRegistry__factory} from "./factories/contracts/PoolRegistry__factory";
 export type {PoolTokens} from "./contracts/PoolTokens";
 export {PoolTokens__factory} from "./factories/contracts/PoolTokens__factory";
+export type {ProtocolFeePercentagesProvider} from "./contracts/ProtocolFeePercentagesProvider";
+export {ProtocolFeePercentagesProvider__factory} from "./factories/contracts/ProtocolFeePercentagesProvider__factory";
 export type {ProtocolFeesCollector} from "./contracts/ProtocolFeesCollector";
 export {ProtocolFeesCollector__factory} from "./factories/contracts/ProtocolFeesCollector__factory";
 export type {StablePoolAmplification} from "./contracts/StablePoolAmplification";

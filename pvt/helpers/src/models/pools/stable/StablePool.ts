@@ -309,6 +309,19 @@ export default class StablePool extends BasePool {
     const currentBalances = params.currentBalances || (await this.getBalances());
     const to = params.recipient ? TypesConverter.toAddress(params.recipient) : params.from?.address ?? ZERO_ADDRESS;
 
+    console.log('')
+    console.log('joinPool')
+    console.log('poolAddress: '+this.address)
+    console.log('poolId: '+this.poolId)
+    console.log('recipient: '+to)
+    console.log('currentBalances: '+currentBalances)
+    console.log('tokens: '+allTokens)
+    console.log('lastChangeBlock: '+params.lastChangeBlock ?? 0)
+    console.log('protocolFeePercentage: '+params.protocolFeePercentage ?? 0)
+    console.log('data: '+params.data ?? '0x')
+    console.log('from: '+params.from)
+    console.log('')
+
     const tx = this.vault.joinPool({
       poolAddress: this.address,
       poolId: this.poolId,

@@ -16,6 +16,7 @@ export {FlashLoans__factory} from "./FlashLoans__factory";
 export {PoolBalances__factory} from "./PoolBalances__factory";
 export {PoolRegistry__factory} from "./PoolRegistry__factory";
 export {PoolTokens__factory} from "./PoolTokens__factory";
+export {ProtocolFeePercentagesProvider__factory} from "./ProtocolFeePercentagesProvider__factory";
 export {ProtocolFeesCollector__factory} from "./ProtocolFeesCollector__factory";
 export {StablePoolAmplification__factory} from "./StablePoolAmplification__factory";
 export {Swaps__factory} from "./Swaps__factory";

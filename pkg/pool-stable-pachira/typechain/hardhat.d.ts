@@ -261,6 +261,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.PoolTokens__factory>;
     getContractFactory(
+      name: "ProtocolFeePercentagesProvider",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ProtocolFeePercentagesProvider__factory>;
+    getContractFactory(
       name: "ProtocolFeesCollector",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ProtocolFeesCollector__factory>;
@@ -623,6 +627,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.PoolTokens>;
+    getContractAt(
+      name: "ProtocolFeePercentagesProvider",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ProtocolFeePercentagesProvider>;
     getContractAt(
       name: "ProtocolFeesCollector",
       address: string,

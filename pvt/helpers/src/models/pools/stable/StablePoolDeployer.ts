@@ -41,6 +41,22 @@ export default {
 
     const owner = TypesConverter.toAddress(params.owner);
 
+    console.log('vault: '+vault.address)
+    console.log('protocolFeeProvider: '+vault.getFeesProvider().address)
+    console.log('name: '+NAME)
+    console.log('symbol: '+SYMBOL)
+    console.log('tokens: '+tokens.addresses)
+    console.log('rateProviders: '+TypesConverter.toAddresses(rateProviders))
+    console.log('tokenRateCacheDurations: '+tokenRateCacheDurations)
+    console.log('exemptFromYieldProtocolFeeFlags: '+exemptFromYieldProtocolFeeFlags)
+    console.log('amplificationParameter: '+amplificationParameter)
+    console.log('swapFeePercentage: '+swapFeePercentage)
+    console.log('pauseWindowDuration: '+pauseWindowDuration)
+    console.log('bufferPeriodDuration: '+bufferPeriodDuration)
+    console.log('owner: '+owner)
+    console.log('version: '+version)
+    console.log('')
+
     return deploy('v2-pool-stable/MockComposableStablePool', {
       args: [
         {

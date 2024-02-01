@@ -19,6 +19,7 @@ export type {FlashLoans} from "./FlashLoans";
 export type {PoolBalances} from "./PoolBalances";
 export type {PoolRegistry} from "./PoolRegistry";
 export type {PoolTokens} from "./PoolTokens";
+export type {ProtocolFeePercentagesProvider} from "./ProtocolFeePercentagesProvider";
 export type {ProtocolFeesCollector} from "./ProtocolFeesCollector";
 export type {StablePoolAmplification} from "./StablePoolAmplification";
 export type {Swaps} from "./Swaps";
